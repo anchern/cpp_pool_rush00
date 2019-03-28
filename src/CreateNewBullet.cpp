@@ -7,7 +7,7 @@ Bullet *default_bullet_elem(t_location const &location)
 	return (bullet);
 }
 
-void	push_bullet_front(t_bullet *bullet, Bullet *bullet1)
+t_bullet	*push_bullet_front(t_bullet *bullet, Bullet *bullet1)
 {
 	t_bullet *new_elem_list;
 
@@ -16,10 +16,11 @@ void	push_bullet_front(t_bullet *bullet, Bullet *bullet1)
 		bullet = new t_bullet;
 		bullet->bullet = bullet1;
 		bullet->next = nullptr;
-		return ;
+		return (bullet);
 	}
 	new_elem_list = new t_bullet;
 	new_elem_list->bullet = bullet1;
 	new_elem_list->next = bullet;
 	bullet = new_elem_list;
+	return (bullet);
 }

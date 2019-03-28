@@ -18,7 +18,7 @@ public:
 	void		setWeapon(const Weapon &weapon);
 	GameEntity	*getType();
 
-	void		shot(t_bullet *bullets_list);
+	t_bullet	*shot(t_bullet *bullets_list);
 	void		death();
 	void		takeDamage(Bullet bullet) {}
 

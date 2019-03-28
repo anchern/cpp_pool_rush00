@@ -11,7 +11,7 @@
 class Character : public GameEntity
 {
 public:
-	virtual void shot(t_bullet *bullets_list) = 0;
+	virtual t_bullet *shot(t_bullet *bullets_list) = 0;
 	virtual void death() = 0;
 	virtual void takeDamage(Bullet bullet) = 0;
 };

@@ -10,7 +10,8 @@
 #include "Player.hpp"
 #include "GameEntity.hpp"
 #include "StandartUnit.hpp"
-#include "includes.h"
+#include "../../includes/includes.h"
+
 
 #define NUMBEROFPLAYERS 2
 #define STANDART_UNITS_NUMBER 50
@@ -20,15 +21,25 @@ class Game
 {
 public:
 	static Game &instance();
-
+	void setBullets(t_bullet *bullets);
 	char &getField(int i, int j);
 	GameEntity *getGameEntitys(int i, int j) const;
+	void setGameEntitys(int i, int j, GameEntity *gameEntity);
+	void setFieldElem(int i, int j, char c);
 	Player &getPlayers(int i);
 	const StandartUnit *getStandartUnits() const;
 	t_bullet *getBullets() const;
 
+	void	convertGEtoGF();
+
 private:
-	Game() = default;
+	Game()
+	{
+		bullets = nullptr;
+//		for (auto &i : field)
+//			for (char &j : i)
+//				j = ' ';
+	}
 	Game(Game const &);
 	Game &operator=(Game const &);
 

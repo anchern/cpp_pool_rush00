@@ -2,7 +2,8 @@
 #define RUSH00_WEAPON_HPP
 
 #include "Bullet.hpp"
-#include "includes.h"
+#include "../../includes/includes.h"
+
 
 class Weapon
 {
@@ -12,7 +13,7 @@ public:
 
 	const t_location &get_location() const;
 
-	void shot(t_bullet *bullets_list, int degrees);
+	t_bullet *shot(t_bullet *bullets_list, int degrees);
 	void set_bullet(const Bullet &_bullet);
 
 private:

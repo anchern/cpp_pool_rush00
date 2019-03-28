@@ -14,12 +14,14 @@ Weapon::Weapon()
 
 
 
-void Weapon::shot(t_bullet *bullets_list, int degrees)
+t_bullet *Weapon::shot(t_bullet *bullets_list, int degrees)
 {
 
-	push_bullet_front(bullets_list, new Bullet(_bullet));
+	bullets_list = push_bullet_front(bullets_list, new Bullet(_bullet));
 	bullets_list->bullet->set_location(this->_location);
 	bullets_list->bullet->move(degrees);
+	bullets_list->bullet->setDegrees(degrees);
+	return (bullets_list);
 }
 
 const t_location &Weapon::get_location() const

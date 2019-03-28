@@ -5,8 +5,9 @@
 #include "Bullet.hpp"
 
 Bullet::Bullet(char type, t_location const &location, unsigned int damage) :
-_type(type), _location(location)
+_type(type)
 {
+	_location = location;
 	this->_damage = damage;
 }
 
@@ -38,4 +39,14 @@ const t_location &Bullet::get_location() const
 void Bullet::set_location(const t_location &_location)
 {
 	Bullet::_location = _location;
+}
+
+void Bullet::setDegrees(int degrees)
+{
+	_degrees = degrees;
+}
+
+char Bullet::get_type() const
+{
+	return _type;
 }

@@ -5,7 +5,8 @@
 #ifndef C_POOL_GAMEENTITY_HPP
 #define C_POOL_GAMEENTITY_HPP
 
-#include "includes.h"
+#include "../../includes/includes.h"
+
 
 class GameEntity
 {
@@ -14,6 +15,8 @@ public:
 	void		move(int degrees);
 
 	int get_speed() const;
+
+	const t_location &get_location() const;
 
 	void set_speed(int _speed);
 

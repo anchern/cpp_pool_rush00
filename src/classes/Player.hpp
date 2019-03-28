@@ -11,8 +11,8 @@
 #include <string>
 
 
-#define WIDTH_PLAYER 10
-#define HEIGHT_PLAYER 10
+#define WIDTH_PLAYER_1 8
+#define HEIGHT_PLAYER_1 4
 
 class Player : public Character
 {
@@ -26,11 +26,19 @@ public:
 
 	void takeDamage(Bullet bullet);
 	void death();
-	void shot(t_bullet *bullets_list);
+	t_bullet *shot(t_bullet *bullets_list);
 
 	GameEntity *getType();
 
 	const std::string &get_name() const;
+
+	const Weapon *get_weapon() const;
+
+	unsigned int get_hp() const;
+
+	unsigned int get_maxHp() const;
+
+	t_location getLocation();
 
 private:
 	std::string	_name;
@@ -38,7 +46,7 @@ private:
 	unsigned	_hp;
 	unsigned	_maxHp;
 public:
-	char		_avatar[HEIGHT_PLAYER][WIDTH_PLAYER] =  {	"   ^   ",
+	char		_avatar[HEIGHT_PLAYER_1][WIDTH_PLAYER_1] =  {	"   ^   ",
 												 			"  (4)  ",
 												 			" /|2|\\ ",
 												 			"/_|||_\\"};

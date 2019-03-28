@@ -1,7 +1,7 @@
 #ifndef RUSH00_ENEMY_HPP
 #define RUSH00_ENEMY_HPP
 
-#include "includes.h"
+#include "../../includes/includes.h"
 #include "Weapon.hpp"
 #include "Character.hpp"
 

@@ -33,9 +33,10 @@ GameEntity* StandartUnit::getType()
 	return ((GameEntity *)this);
 }
 
-void StandartUnit::shot(t_bullet *bullets_list)
+t_bullet *StandartUnit::shot(t_bullet *bullets_list)
 {
-	_weapon.shot(bullets_list);
+	bullets_list = _weapon.shot(bullets_list, this->_degrees);
+	return (bullets_list);
 }
 
 void StandartUnit::death()
