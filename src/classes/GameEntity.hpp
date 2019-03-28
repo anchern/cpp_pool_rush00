@@ -8,8 +8,13 @@
 
 class GameEntity
 {
+public:
 	virtual GameEntity *getType() = 0;
 	virtual void move(int degrees) = 0;
+
+protected:
+	unsigned _damage;
+	short	 vector;
 };
 
 
