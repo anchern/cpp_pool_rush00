@@ -5,13 +5,16 @@
 #ifndef C_POOL_BULLET_HPP
 #define C_POOL_BULLET_HPP
 
-#include "../includes/includes.h"
+#include "includes.h"
 #include "GameEntity.hpp"
+
 
 class Bullet: public GameEntity
 {
 public:
-	explicit Bullet(unsigned damage = 1, char _type = '*');
+	Bullet(char _type, t_location const &location,
+			unsigned damage);
+	Bullet();
 
 	unsigned int get_damage() const;
 
@@ -19,12 +22,12 @@ public:
 
 	void set_location(const t_location &_location);
 
-	void move(int degrees);
+	void move(int degrees){}
 
 	GameEntity *getType();
 
+	~Bullet() = default;
 private:
-	unsigned	_damage;
 	char		_type;
 	t_location 	_location;
 };

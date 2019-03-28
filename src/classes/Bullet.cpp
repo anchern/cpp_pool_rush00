@@ -4,16 +4,24 @@
 
 #include "Bullet.hpp"
 
-Bullet::Bullet(unsigned int damage, char type)
+Bullet::Bullet(char type, t_location const &location, unsigned int damage) :
+_type(type), _location(location)
 {
-	_damage = damage;
-	_type = type;
+	this->_damage = damage;
+}
+
+Bullet::Bullet()
+{
+	_type = '*';
+	_location.x = -1;
+	_location.y = -1;
+	_damage = 1;
 }
 
 
-GameEntity* Bullet::getType()
+GameEntity *Bullet::getType()
 {
-	return (this);
+	return ((GameEntity *)this);
 }
 
 unsigned int Bullet::get_damage() const

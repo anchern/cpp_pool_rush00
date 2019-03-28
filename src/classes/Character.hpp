@@ -6,9 +6,11 @@
 #define C_POOL_CHARACTER_HPP
 
 #include "Bullet.hpp"
+#include "GameEntity.hpp"
 
-class Character
+class Character : public GameEntity
 {
+public:
 	virtual void shot() = 0;
 	virtual void death() = 0;
 	virtual void takeDamage(Bullet bullet) = 0;
