@@ -8,44 +8,44 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/dlewando/rush00/cmake-build-debug"/>
+				<Option working_dir="/Users/achernys/cpp_pool_rush00/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/Users/dlewando/rush00/cmake-build-debug"/>
+				<Option working_dir="/Users/achernys/cpp_pool_rush00/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/Users/dlewando/rush00/cmake-build-debug"/>
+				<Option working_dir="/Users/achernys/cpp_pool_rush00/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rush00">
-				<Option output="/Users/dlewando/rush00/cmake-build-debug/rush00" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/dlewando/rush00/cmake-build-debug"/>
+				<Option output="/Users/achernys/cpp_pool_rush00/cmake-build-debug/rush00" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/achernys/cpp_pool_rush00/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Users/dlewando/rush00/classes"/>
-					<Add directory="/Users/dlewando/rush00/includes"/>
+					<Add directory="/Users/achernys/cpp_pool_rush00/src/classes"/>
+					<Add directory="/Users/achernys/cpp_pool_rush00/includes"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
@@ -55,21 +55,21 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 rush00"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 rush00"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rush00/fast">
-				<Option output="/Users/dlewando/rush00/cmake-build-debug/rush00" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/dlewando/rush00/cmake-build-debug"/>
+				<Option output="/Users/achernys/cpp_pool_rush00/cmake-build-debug/rush00" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/achernys/cpp_pool_rush00/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Users/dlewando/rush00/classes"/>
-					<Add directory="/Users/dlewando/rush00/includes"/>
+					<Add directory="/Users/achernys/cpp_pool_rush00/src/classes"/>
+					<Add directory="/Users/achernys/cpp_pool_rush00/includes"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
@@ -79,41 +79,80 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 rush00/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dlewando/rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 rush00/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/achernys/cpp_pool_rush00/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/dlewando/rush00/classes/Bullet.cpp">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/includes/includes.h">
 			<Option target="rush00"/>
 		</Unit>
-		<Unit filename="/Users/dlewando/rush00/classes/Bullet.hpp">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/CreateGame.cpp">
 			<Option target="rush00"/>
 		</Unit>
-		<Unit filename="/Users/dlewando/rush00/classes/Character.cpp">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/CreateNewBullet.cpp">
 			<Option target="rush00"/>
 		</Unit>
-		<Unit filename="/Users/dlewando/rush00/classes/Character.hpp">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/DeleteBullets.cpp">
 			<Option target="rush00"/>
 		</Unit>
-		<Unit filename="/Users/dlewando/rush00/classes/GameEntity.cpp">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/SetEntityOnField.cpp">
 			<Option target="rush00"/>
 		</Unit>
-		<Unit filename="/Users/dlewando/rush00/classes/GameEntity.hpp">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Bullet.cpp">
 			<Option target="rush00"/>
 		</Unit>
-		<Unit filename="/Users/dlewando/rush00/classes/Player.cpp">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Bullet.hpp">
 			<Option target="rush00"/>
 		</Unit>
-		<Unit filename="/Users/dlewando/rush00/classes/Player.hpp">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Character.cpp">
 			<Option target="rush00"/>
 		</Unit>
-		<Unit filename="/Users/dlewando/rush00/includes/includes.h">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Character.hpp">
 			<Option target="rush00"/>
 		</Unit>
-		<Unit filename="/Users/dlewando/rush00/CMakeLists.txt">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Enemy.cpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Enemy.hpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Game.cpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Game.hpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/GameEntity.cpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/GameEntity.hpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Player.cpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Player.hpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/StandartUnit.cpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/StandartUnit.hpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Weapon.cpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Weapon.hpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/main.cpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

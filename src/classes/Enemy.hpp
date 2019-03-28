@@ -1,7 +1,3 @@
-//
-// Created by Denis LEWANDOWSKI on 2019-03-28.
-//
-
 #ifndef RUSH00_ENEMY_HPP
 #define RUSH00_ENEMY_HPP
 
@@ -12,11 +8,12 @@
 class Enemy : public Character
 {
 public:
-	virtual  void setWeapon(Weapon weapon) = 0;
+	virtual  void setWeapon(const Weapon &weapon) = 0;
+	virtual ~Enemy() = default;
 protected:
-	t_location	location;
-	unsigned	_hp;
-	unsigned	_maxHp;
+	t_location	location = {-1, -1};
+	unsigned	_hp = 0;
+	unsigned	_maxHp = 1;
 };
 
 

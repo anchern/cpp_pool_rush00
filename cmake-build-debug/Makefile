@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/dlewando/rush00
+CMAKE_SOURCE_DIR = /Users/achernys/cpp_pool_rush00
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/dlewando/rush00/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/achernys/cpp_pool_rush00/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dlewando/rush00/cmake-build-debug/CMakeFiles /Users/dlewando/rush00/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles /Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dlewando/rush00/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,113 +123,356 @@ rush00/fast:
 	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/build
 .PHONY : rush00/fast
 
-classes/Bullet.o: classes/Bullet.cpp.o
+src/CreateGame.o: src/CreateGame.cpp.o
 
-.PHONY : classes/Bullet.o
-
-# target to build an object file
-classes/Bullet.cpp.o:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/Bullet.cpp.o
-.PHONY : classes/Bullet.cpp.o
-
-classes/Bullet.i: classes/Bullet.cpp.i
-
-.PHONY : classes/Bullet.i
-
-# target to preprocess a source file
-classes/Bullet.cpp.i:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/Bullet.cpp.i
-.PHONY : classes/Bullet.cpp.i
-
-classes/Bullet.s: classes/Bullet.cpp.s
-
-.PHONY : classes/Bullet.s
-
-# target to generate assembly for a file
-classes/Bullet.cpp.s:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/Bullet.cpp.s
-.PHONY : classes/Bullet.cpp.s
-
-classes/Character.o: classes/Character.cpp.o
-
-.PHONY : classes/Character.o
+.PHONY : src/CreateGame.o
 
 # target to build an object file
-classes/Character.cpp.o:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/Character.cpp.o
-.PHONY : classes/Character.cpp.o
+src/CreateGame.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/CreateGame.cpp.o
+.PHONY : src/CreateGame.cpp.o
 
-classes/Character.i: classes/Character.cpp.i
+src/CreateGame.i: src/CreateGame.cpp.i
 
-.PHONY : classes/Character.i
+.PHONY : src/CreateGame.i
 
 # target to preprocess a source file
-classes/Character.cpp.i:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/Character.cpp.i
-.PHONY : classes/Character.cpp.i
+src/CreateGame.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/CreateGame.cpp.i
+.PHONY : src/CreateGame.cpp.i
 
-classes/Character.s: classes/Character.cpp.s
+src/CreateGame.s: src/CreateGame.cpp.s
 
-.PHONY : classes/Character.s
+.PHONY : src/CreateGame.s
 
 # target to generate assembly for a file
-classes/Character.cpp.s:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/Character.cpp.s
-.PHONY : classes/Character.cpp.s
+src/CreateGame.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/CreateGame.cpp.s
+.PHONY : src/CreateGame.cpp.s
 
-classes/GameEntity.o: classes/GameEntity.cpp.o
+src/CreateNewBullet.o: src/CreateNewBullet.cpp.o
 
-.PHONY : classes/GameEntity.o
+.PHONY : src/CreateNewBullet.o
 
 # target to build an object file
-classes/GameEntity.cpp.o:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/GameEntity.cpp.o
-.PHONY : classes/GameEntity.cpp.o
+src/CreateNewBullet.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/CreateNewBullet.cpp.o
+.PHONY : src/CreateNewBullet.cpp.o
 
-classes/GameEntity.i: classes/GameEntity.cpp.i
+src/CreateNewBullet.i: src/CreateNewBullet.cpp.i
 
-.PHONY : classes/GameEntity.i
+.PHONY : src/CreateNewBullet.i
 
 # target to preprocess a source file
-classes/GameEntity.cpp.i:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/GameEntity.cpp.i
-.PHONY : classes/GameEntity.cpp.i
+src/CreateNewBullet.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/CreateNewBullet.cpp.i
+.PHONY : src/CreateNewBullet.cpp.i
 
-classes/GameEntity.s: classes/GameEntity.cpp.s
+src/CreateNewBullet.s: src/CreateNewBullet.cpp.s
 
-.PHONY : classes/GameEntity.s
+.PHONY : src/CreateNewBullet.s
 
 # target to generate assembly for a file
-classes/GameEntity.cpp.s:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/GameEntity.cpp.s
-.PHONY : classes/GameEntity.cpp.s
+src/CreateNewBullet.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/CreateNewBullet.cpp.s
+.PHONY : src/CreateNewBullet.cpp.s
 
-classes/Player.o: classes/Player.cpp.o
+src/DeleteBullets.o: src/DeleteBullets.cpp.o
 
-.PHONY : classes/Player.o
+.PHONY : src/DeleteBullets.o
 
 # target to build an object file
-classes/Player.cpp.o:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/Player.cpp.o
-.PHONY : classes/Player.cpp.o
+src/DeleteBullets.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/DeleteBullets.cpp.o
+.PHONY : src/DeleteBullets.cpp.o
 
-classes/Player.i: classes/Player.cpp.i
+src/DeleteBullets.i: src/DeleteBullets.cpp.i
 
-.PHONY : classes/Player.i
+.PHONY : src/DeleteBullets.i
 
 # target to preprocess a source file
-classes/Player.cpp.i:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/Player.cpp.i
-.PHONY : classes/Player.cpp.i
+src/DeleteBullets.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/DeleteBullets.cpp.i
+.PHONY : src/DeleteBullets.cpp.i
 
-classes/Player.s: classes/Player.cpp.s
+src/DeleteBullets.s: src/DeleteBullets.cpp.s
 
-.PHONY : classes/Player.s
+.PHONY : src/DeleteBullets.s
 
 # target to generate assembly for a file
-classes/Player.cpp.s:
-	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/classes/Player.cpp.s
-.PHONY : classes/Player.cpp.s
+src/DeleteBullets.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/DeleteBullets.cpp.s
+.PHONY : src/DeleteBullets.cpp.s
+
+src/SetEntityOnField.o: src/SetEntityOnField.cpp.o
+
+.PHONY : src/SetEntityOnField.o
+
+# target to build an object file
+src/SetEntityOnField.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/SetEntityOnField.cpp.o
+.PHONY : src/SetEntityOnField.cpp.o
+
+src/SetEntityOnField.i: src/SetEntityOnField.cpp.i
+
+.PHONY : src/SetEntityOnField.i
+
+# target to preprocess a source file
+src/SetEntityOnField.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/SetEntityOnField.cpp.i
+.PHONY : src/SetEntityOnField.cpp.i
+
+src/SetEntityOnField.s: src/SetEntityOnField.cpp.s
+
+.PHONY : src/SetEntityOnField.s
+
+# target to generate assembly for a file
+src/SetEntityOnField.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/SetEntityOnField.cpp.s
+.PHONY : src/SetEntityOnField.cpp.s
+
+src/classes/Bullet.o: src/classes/Bullet.cpp.o
+
+.PHONY : src/classes/Bullet.o
+
+# target to build an object file
+src/classes/Bullet.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Bullet.cpp.o
+.PHONY : src/classes/Bullet.cpp.o
+
+src/classes/Bullet.i: src/classes/Bullet.cpp.i
+
+.PHONY : src/classes/Bullet.i
+
+# target to preprocess a source file
+src/classes/Bullet.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Bullet.cpp.i
+.PHONY : src/classes/Bullet.cpp.i
+
+src/classes/Bullet.s: src/classes/Bullet.cpp.s
+
+.PHONY : src/classes/Bullet.s
+
+# target to generate assembly for a file
+src/classes/Bullet.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Bullet.cpp.s
+.PHONY : src/classes/Bullet.cpp.s
+
+src/classes/Character.o: src/classes/Character.cpp.o
+
+.PHONY : src/classes/Character.o
+
+# target to build an object file
+src/classes/Character.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Character.cpp.o
+.PHONY : src/classes/Character.cpp.o
+
+src/classes/Character.i: src/classes/Character.cpp.i
+
+.PHONY : src/classes/Character.i
+
+# target to preprocess a source file
+src/classes/Character.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Character.cpp.i
+.PHONY : src/classes/Character.cpp.i
+
+src/classes/Character.s: src/classes/Character.cpp.s
+
+.PHONY : src/classes/Character.s
+
+# target to generate assembly for a file
+src/classes/Character.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Character.cpp.s
+.PHONY : src/classes/Character.cpp.s
+
+src/classes/Enemy.o: src/classes/Enemy.cpp.o
+
+.PHONY : src/classes/Enemy.o
+
+# target to build an object file
+src/classes/Enemy.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Enemy.cpp.o
+.PHONY : src/classes/Enemy.cpp.o
+
+src/classes/Enemy.i: src/classes/Enemy.cpp.i
+
+.PHONY : src/classes/Enemy.i
+
+# target to preprocess a source file
+src/classes/Enemy.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Enemy.cpp.i
+.PHONY : src/classes/Enemy.cpp.i
+
+src/classes/Enemy.s: src/classes/Enemy.cpp.s
+
+.PHONY : src/classes/Enemy.s
+
+# target to generate assembly for a file
+src/classes/Enemy.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Enemy.cpp.s
+.PHONY : src/classes/Enemy.cpp.s
+
+src/classes/Game.o: src/classes/Game.cpp.o
+
+.PHONY : src/classes/Game.o
+
+# target to build an object file
+src/classes/Game.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Game.cpp.o
+.PHONY : src/classes/Game.cpp.o
+
+src/classes/Game.i: src/classes/Game.cpp.i
+
+.PHONY : src/classes/Game.i
+
+# target to preprocess a source file
+src/classes/Game.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Game.cpp.i
+.PHONY : src/classes/Game.cpp.i
+
+src/classes/Game.s: src/classes/Game.cpp.s
+
+.PHONY : src/classes/Game.s
+
+# target to generate assembly for a file
+src/classes/Game.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Game.cpp.s
+.PHONY : src/classes/Game.cpp.s
+
+src/classes/GameEntity.o: src/classes/GameEntity.cpp.o
+
+.PHONY : src/classes/GameEntity.o
+
+# target to build an object file
+src/classes/GameEntity.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/GameEntity.cpp.o
+.PHONY : src/classes/GameEntity.cpp.o
+
+src/classes/GameEntity.i: src/classes/GameEntity.cpp.i
+
+.PHONY : src/classes/GameEntity.i
+
+# target to preprocess a source file
+src/classes/GameEntity.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/GameEntity.cpp.i
+.PHONY : src/classes/GameEntity.cpp.i
+
+src/classes/GameEntity.s: src/classes/GameEntity.cpp.s
+
+.PHONY : src/classes/GameEntity.s
+
+# target to generate assembly for a file
+src/classes/GameEntity.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/GameEntity.cpp.s
+.PHONY : src/classes/GameEntity.cpp.s
+
+src/classes/Player.o: src/classes/Player.cpp.o
+
+.PHONY : src/classes/Player.o
+
+# target to build an object file
+src/classes/Player.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Player.cpp.o
+.PHONY : src/classes/Player.cpp.o
+
+src/classes/Player.i: src/classes/Player.cpp.i
+
+.PHONY : src/classes/Player.i
+
+# target to preprocess a source file
+src/classes/Player.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Player.cpp.i
+.PHONY : src/classes/Player.cpp.i
+
+src/classes/Player.s: src/classes/Player.cpp.s
+
+.PHONY : src/classes/Player.s
+
+# target to generate assembly for a file
+src/classes/Player.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Player.cpp.s
+.PHONY : src/classes/Player.cpp.s
+
+src/classes/StandartUnit.o: src/classes/StandartUnit.cpp.o
+
+.PHONY : src/classes/StandartUnit.o
+
+# target to build an object file
+src/classes/StandartUnit.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.o
+.PHONY : src/classes/StandartUnit.cpp.o
+
+src/classes/StandartUnit.i: src/classes/StandartUnit.cpp.i
+
+.PHONY : src/classes/StandartUnit.i
+
+# target to preprocess a source file
+src/classes/StandartUnit.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.i
+.PHONY : src/classes/StandartUnit.cpp.i
+
+src/classes/StandartUnit.s: src/classes/StandartUnit.cpp.s
+
+.PHONY : src/classes/StandartUnit.s
+
+# target to generate assembly for a file
+src/classes/StandartUnit.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.s
+.PHONY : src/classes/StandartUnit.cpp.s
+
+src/classes/Weapon.o: src/classes/Weapon.cpp.o
+
+.PHONY : src/classes/Weapon.o
+
+# target to build an object file
+src/classes/Weapon.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Weapon.cpp.o
+.PHONY : src/classes/Weapon.cpp.o
+
+src/classes/Weapon.i: src/classes/Weapon.cpp.i
+
+.PHONY : src/classes/Weapon.i
+
+# target to preprocess a source file
+src/classes/Weapon.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Weapon.cpp.i
+.PHONY : src/classes/Weapon.cpp.i
+
+src/classes/Weapon.s: src/classes/Weapon.cpp.s
+
+.PHONY : src/classes/Weapon.s
+
+# target to generate assembly for a file
+src/classes/Weapon.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/classes/Weapon.cpp.s
+.PHONY : src/classes/Weapon.cpp.s
+
+src/main.o: src/main.cpp.o
+
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.cpp.o:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
+
+src/main.i: src/main.cpp.i
+
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) -f CMakeFiles/rush00.dir/build.make CMakeFiles/rush00.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
 # Help Target
 help:
@@ -240,18 +483,45 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... rush00"
-	@echo "... classes/Bullet.o"
-	@echo "... classes/Bullet.i"
-	@echo "... classes/Bullet.s"
-	@echo "... classes/Character.o"
-	@echo "... classes/Character.i"
-	@echo "... classes/Character.s"
-	@echo "... classes/GameEntity.o"
-	@echo "... classes/GameEntity.i"
-	@echo "... classes/GameEntity.s"
-	@echo "... classes/Player.o"
-	@echo "... classes/Player.i"
-	@echo "... classes/Player.s"
+	@echo "... src/CreateGame.o"
+	@echo "... src/CreateGame.i"
+	@echo "... src/CreateGame.s"
+	@echo "... src/CreateNewBullet.o"
+	@echo "... src/CreateNewBullet.i"
+	@echo "... src/CreateNewBullet.s"
+	@echo "... src/DeleteBullets.o"
+	@echo "... src/DeleteBullets.i"
+	@echo "... src/DeleteBullets.s"
+	@echo "... src/SetEntityOnField.o"
+	@echo "... src/SetEntityOnField.i"
+	@echo "... src/SetEntityOnField.s"
+	@echo "... src/classes/Bullet.o"
+	@echo "... src/classes/Bullet.i"
+	@echo "... src/classes/Bullet.s"
+	@echo "... src/classes/Character.o"
+	@echo "... src/classes/Character.i"
+	@echo "... src/classes/Character.s"
+	@echo "... src/classes/Enemy.o"
+	@echo "... src/classes/Enemy.i"
+	@echo "... src/classes/Enemy.s"
+	@echo "... src/classes/Game.o"
+	@echo "... src/classes/Game.i"
+	@echo "... src/classes/Game.s"
+	@echo "... src/classes/GameEntity.o"
+	@echo "... src/classes/GameEntity.i"
+	@echo "... src/classes/GameEntity.s"
+	@echo "... src/classes/Player.o"
+	@echo "... src/classes/Player.i"
+	@echo "... src/classes/Player.s"
+	@echo "... src/classes/StandartUnit.o"
+	@echo "... src/classes/StandartUnit.i"
+	@echo "... src/classes/StandartUnit.s"
+	@echo "... src/classes/Weapon.o"
+	@echo "... src/classes/Weapon.i"
+	@echo "... src/classes/Weapon.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 .PHONY : help
 
 

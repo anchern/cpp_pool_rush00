@@ -1,7 +1,3 @@
-//
-// Created by Denis LEWANDOWSKI on 2019-03-25.
-//
-
 #include "Weapon.hpp"
 
 Weapon::Weapon(t_location const &location,  char avatar) :
@@ -16,12 +12,22 @@ Weapon::Weapon()
 	_avatar = 'A';
 }
 
-void Weapon::shot()
+
+
+void Weapon::shot(t_bullet *bullets_list, int degrees)
 {
 
+	push_bullet_front(bullets_list, new Bullet(_bullet));
+	bullets_list->bullet->set_location(this->_location);
+	bullets_list->bullet->move(degrees);
 }
 
 const t_location &Weapon::get_location() const
 {
 	return _location;
+}
+
+void Weapon::set_bullet(const Bullet &_bullet)
+{
+	Weapon::_bullet = _bullet;
 }

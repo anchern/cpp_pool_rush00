@@ -19,4 +19,4 @@ add_executable(rush00
         src/classes/Enemy.cpp src/classes/Enemy.hpp src/classes/Game.cpp
         src/classes/Game.hpp src/classes/StandartUnit.cpp
         src/classes/StandartUnit.hpp src/CreateNewBullet.cpp
-        src/DeleteBullets.cpp src/main.cpp)
+        src/DeleteBullets.cpp src/main.cpp src/CreateGame.cpp src/SetEntityOnField.cpp)

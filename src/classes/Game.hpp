@@ -20,7 +20,12 @@ class Game
 {
 public:
 	static Game &instance();
-	char **getField(){ return (nullptr);}
+
+	char &getField(int i, int j);
+	GameEntity *getGameEntitys(int i, int j) const;
+	Player &getPlayers(int i);
+	const StandartUnit *getStandartUnits() const;
+	t_bullet *getBullets() const;
 
 private:
 	Game() = default;
@@ -28,8 +33,8 @@ private:
 	Game &operator=(Game const &);
 
 
-	time_t time;
-	unsigned score;
+	time_t time = 0;
+	unsigned score = 0;
 
 
 	Player players[NUMBEROFPLAYERS];

@@ -17,12 +17,8 @@ public:
 	Bullet();
 
 	unsigned int get_damage() const;
-
 	const t_location &get_location() const;
-
 	void set_location(const t_location &_location);
-
-	void move(int degrees){}
 
 	GameEntity *getType();
 

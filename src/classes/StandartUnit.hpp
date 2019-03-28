@@ -13,13 +13,14 @@ class StandartUnit : public Enemy
 public:
 	explicit StandartUnit(t_location location);
 	StandartUnit();
-	void setLocation(t_location const &location);
-	void setWeapon(Weapon weapon);
-	GameEntity *getType(){ return (nullptr);}
-	void move(int degrees) {}
-	void shot() {}
-	void death(){}
-	void takeDamage(Bullet bullet) {}
+
+	void		setLocation(t_location const &location);
+	void		setWeapon(const Weapon &weapon);
+	GameEntity	*getType();
+
+	void		shot(t_bullet *bullets_list);
+	void		death();
+	void		takeDamage(Bullet bullet) {}
 
 private:
 	Weapon _weapon;

@@ -1,7 +1,3 @@
-//
-// Created by Denis LEWANDOWSKI on 2019-03-25.
-//
-
 #ifndef RUSH00_WEAPON_HPP
 #define RUSH00_WEAPON_HPP
 
@@ -16,7 +12,8 @@ public:
 
 	const t_location &get_location() const;
 
-	void shot();
+	void shot(t_bullet *bullets_list, int degrees);
+	void set_bullet(const Bullet &_bullet);
 
 private:
 	t_location	_location;

@@ -16,6 +16,7 @@ Bullet::Bullet()
 	_location.x = -1;
 	_location.y = -1;
 	_damage = 1;
+	_speed = 2;
 }
 
 

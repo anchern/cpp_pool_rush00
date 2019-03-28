@@ -4,16 +4,25 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/dlewando/rush00/classes/Bullet.cpp" "/Users/dlewando/rush00/cmake-build-debug/CMakeFiles/rush00.dir/classes/Bullet.cpp.o"
-  "/Users/dlewando/rush00/classes/Character.cpp" "/Users/dlewando/rush00/cmake-build-debug/CMakeFiles/rush00.dir/classes/Character.cpp.o"
-  "/Users/dlewando/rush00/classes/GameEntity.cpp" "/Users/dlewando/rush00/cmake-build-debug/CMakeFiles/rush00.dir/classes/GameEntity.cpp.o"
-  "/Users/dlewando/rush00/classes/Player.cpp" "/Users/dlewando/rush00/cmake-build-debug/CMakeFiles/rush00.dir/classes/Player.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/CreateGame.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/CreateGame.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/CreateNewBullet.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/CreateNewBullet.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/DeleteBullets.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/DeleteBullets.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/SetEntityOnField.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/SetEntityOnField.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/classes/Bullet.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/classes/Bullet.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/classes/Character.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/classes/Character.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/classes/Enemy.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/classes/Enemy.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/classes/Game.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/classes/Game.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/classes/GameEntity.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/classes/GameEntity.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/classes/Player.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/classes/Player.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/classes/StandartUnit.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/classes/Weapon.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/classes/Weapon.cpp.o"
+  "/Users/achernys/cpp_pool_rush00/src/main.cpp" "/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles/rush00.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "../classes"
+  "../src/classes"
   "../includes"
   )
 

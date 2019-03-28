@@ -18,28 +18,30 @@ class Player : public Character
 {
 public:
 	explicit Player(const std::string &name);
+	Player();
 
 	void setWeapon(Weapon weapon, int i);
 
+	void setName(const std::string &_name);
+
 	void takeDamage(Bullet bullet);
-	void death() {};
-	void shot(){};
-	void move(int degrees){}
+	void death();
+	void shot(t_bullet *bullets_list);
 
+	GameEntity *getType();
 
-	GameEntity *getType(){};
-
+	const std::string &get_name() const;
 
 private:
 	std::string	_name;
 	Weapon		_weapon[3];
 	unsigned	_hp;
 	unsigned	_maxHp;
-	t_location	_location;
+public:
 	char		_avatar[HEIGHT_PLAYER][WIDTH_PLAYER] =  {	"   ^   ",
-								  							"  ( )  ",
-								  							" /| |\\ ",
-								  							"/_|||_\\"};
+												 			"  (4)  ",
+												 			" /|2|\\ ",
+												 			"/_|||_\\"};
 };
 
 #endif //C_POOL_PLAYER_HPP

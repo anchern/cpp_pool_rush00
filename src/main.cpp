@@ -4,6 +4,9 @@
 int main()
 {
 	Game &game = Game::instance();
-	std::cout << " " << std::endl;
+	initGame(game, "Kek");
+	std::cout << "Player: " << game.getPlayers(0).get_name() << std::endl;
+	for (auto &i : game.getPlayers(0)._avatar)
+		std::cout << i << std::endl;
 	return (0);
 }
