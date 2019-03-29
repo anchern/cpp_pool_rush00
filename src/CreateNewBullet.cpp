@@ -1,5 +1,5 @@
 
-#include "Bullet.hpp"
+#include "classes/Bullet.hpp"
 
 Bullet *default_bullet_elem(t_location const &location)
 {

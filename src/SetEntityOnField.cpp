@@ -1,5 +1,5 @@
-#include "includes.h"
-#include "Game.hpp"
+#include "../includes/includes.h"
+#include "classes/Game.hpp"
 
 void	setEntitiesOnField(Game &game)
 {

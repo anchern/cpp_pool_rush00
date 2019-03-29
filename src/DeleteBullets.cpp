@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bullet.hpp"
+#include "classes/Bullet.hpp"
 
 void free_bullets(t_bullet *bullet)
 {

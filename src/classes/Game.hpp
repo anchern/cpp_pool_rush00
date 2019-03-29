@@ -13,6 +13,7 @@
 #include "../../includes/includes.h"
 
 
+
 #define NUMBEROFPLAYERS 2
 #define STANDART_UNITS_NUMBER 50
 
@@ -36,9 +37,9 @@ private:
 	Game()
 	{
 		bullets = nullptr;
-//		for (auto &i : field)
-//			for (char &j : i)
-//				j = ' ';
+		for (auto &i : field)
+			for (char &j : i)
+				j = ' ';
 	}
 	Game(Game const &);
 	Game &operator=(Game const &);

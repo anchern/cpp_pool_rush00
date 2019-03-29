@@ -1,4 +1,4 @@
-#include "Game.hpp"
+#include "classes/Game.hpp"
 #include <iostream>
 #include "ncurses.h"
 
@@ -21,7 +21,8 @@ int main()
 	int b = getch();
 	int c = getch();
 	int d = getch();
-	std::cout << a << b << c << d <<  std::endl;
+	printw("%i %i %i %i", a, b, c, d);
+	getch();
 	endwin();
 
 	return (0);

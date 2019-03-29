@@ -1,4 +1,4 @@
-#include "Game.hpp"
+#include "classes/Game.hpp"
 
 void	initGame(Game &game, const std::string &player_name_1)
 {
