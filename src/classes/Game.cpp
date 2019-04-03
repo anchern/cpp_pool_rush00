@@ -1,8 +1,11 @@
-//
-// Created by Denis LEWANDOWSKI on 2019-03-28.
-//
-
 #include "Game.hpp"
+
+Game::Game()
+{
+	bullets = nullptr;
+	clsField();
+
+}
 
 Game& Game::instance()
 {
@@ -10,12 +13,12 @@ Game& Game::instance()
 	return game;
 }
 
-Player &Game::getPlayers(int i)
+Player *Game::getPlayers()
 {
-	return players[i];
+	return players;
 }
 
-const StandartUnit *Game::getStandartUnits() const
+StandardUnit *Game::getStandartUnits()
 {
 	return StandartUnits;
 }
@@ -32,7 +35,7 @@ char &Game::getField(int i, int j)
 
 GameEntity* Game::getGameEntitys(int i, int j) const
 {
-	return (gameEntitys[i][j]);
+	return (gameEntities[i][j]);
 }
 
 void Game::setBullets(t_bullet *bullets)
@@ -42,26 +45,36 @@ void Game::setBullets(t_bullet *bullets)
 
 void Game::setGameEntitys(int i, int j, GameEntity *gameEntity)
 {
-	this->gameEntitys[i][j] = gameEntity;
+	this->gameEntities[i][j] = gameEntity;
 }
 
-void Game::convertGEtoGF()
-{
-	Character *player;
-	for (int i = 0; i < HEIGHT; i++)
-	{
-		for (int j = 0; j < WIDTH; j++)
-		{
-			if (gameEntitys[i][j] != nullptr)
-			{
-				player = dynamic_cast<Character *>(gameEntitys[i][j]);
-
-			}
-		}
-	}
-}
 
 void Game::setFieldElem(int i, int j,char c)
 {
 	field[i][j] = c;
 }
+
+void Game::clsField()
+{
+	for (auto &i : field)
+	{
+		for (char &j : i)
+			j = ' ';
+		i[WIDTH] = 0;
+	}
+
+}
+
+void Game::printField()
+{
+	for (auto &i : field)
+		std::cout << i << std::endl;
+}
+
+void Game::clsGameEntities()
+{
+	for (auto &i : gameEntities)
+		for (auto &j : i)
+			j = nullptr;
+}
+

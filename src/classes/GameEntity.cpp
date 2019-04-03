@@ -26,3 +26,18 @@ const t_location &GameEntity::get_location() const
 {
 	return _location;
 }
+
+int GameEntity::get_degrees() const
+{
+	return _degrees;
+}
+
+unsigned int GameEntity::get_damage() const
+{
+	return _damage;
+}
+
+void GameEntity::set_degrees(int _degrees)
+{
+	GameEntity::_degrees = _degrees;
+}

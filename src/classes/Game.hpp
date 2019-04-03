@@ -9,7 +9,7 @@
 #include <ctime>
 #include "Player.hpp"
 #include "GameEntity.hpp"
-#include "StandartUnit.hpp"
+#include "StandardUnit.hpp"
 #include "../../includes/includes.h"
 
 
@@ -27,20 +27,17 @@ public:
 	GameEntity *getGameEntitys(int i, int j) const;
 	void setGameEntitys(int i, int j, GameEntity *gameEntity);
 	void setFieldElem(int i, int j, char c);
-	Player &getPlayers(int i);
-	const StandartUnit *getStandartUnits() const;
+	Player *getPlayers();
+	StandardUnit *getStandartUnits();
 	t_bullet *getBullets() const;
+	void	clsField();
+	void	clsGameEntities();
+	void	printField();
 
-	void	convertGEtoGF();
+
 
 private:
-	Game()
-	{
-		bullets = nullptr;
-		for (auto &i : field)
-			for (char &j : i)
-				j = ' ';
-	}
+	Game();
 	Game(Game const &);
 	Game &operator=(Game const &);
 
@@ -50,11 +47,11 @@ private:
 
 
 	Player players[NUMBEROFPLAYERS];
-	StandartUnit StandartUnits[STANDART_UNITS_NUMBER];
-	GameEntity *gameEntitys[HEIGHT][WIDTH];
+	StandardUnit StandartUnits[STANDART_UNITS_NUMBER];
+	GameEntity *gameEntities[HEIGHT][WIDTH];
 	t_bullet *bullets;
 
-	char field[HEIGHT][WIDTH];
+	char field[HEIGHT][WIDTH + 1];
 };
 
 

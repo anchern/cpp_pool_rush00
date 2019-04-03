@@ -11,9 +11,6 @@ public:
 	virtual  void setWeapon(const Weapon &weapon) = 0;
 	virtual ~Enemy() = default;
 protected:
-	t_location	location = {-1, -1};
-	unsigned	_hp = 0;
-	unsigned	_maxHp = 1;
 };
 
 

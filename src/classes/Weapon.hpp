@@ -16,6 +16,8 @@ public:
 	t_bullet *shot(t_bullet *bullets_list, int degrees);
 	void set_bullet(const Bullet &_bullet);
 
+	void set_location(t_location location);
+
 private:
 	t_location	_location;
 	char 		_avatar;

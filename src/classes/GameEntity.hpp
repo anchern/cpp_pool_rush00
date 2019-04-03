@@ -16,6 +16,12 @@ public:
 
 	int get_speed() const;
 
+	void set_degrees(int _degrees);
+
+	unsigned int get_damage() const;
+
+	int get_degrees() const;
+
 	const t_location &get_location() const;
 
 	void set_speed(int _speed);

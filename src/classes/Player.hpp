@@ -24,7 +24,7 @@ public:
 
 	void setName(const std::string &_name);
 
-	void takeDamage(Bullet bullet);
+	void takeDamage(Bullet &bullet);
 	void death();
 	t_bullet *shot(t_bullet *bullets_list);
 
@@ -34,17 +34,13 @@ public:
 
 	const Weapon *get_weapon() const;
 
-	unsigned int get_hp() const;
-
-	unsigned int get_maxHp() const;
 
 	t_location getLocation();
+	void move(int degrees);
 
 private:
 	std::string	_name;
 	Weapon		_weapon[3];
-	unsigned	_hp;
-	unsigned	_maxHp;
 public:
 	char		_avatar[HEIGHT_PLAYER_1][WIDTH_PLAYER_1] =  {	"   ^   ",
 												 			"  (4)  ",

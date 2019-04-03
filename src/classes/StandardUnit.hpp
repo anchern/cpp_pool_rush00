@@ -6,13 +6,15 @@
 #define RUSH00_STANDARTUNIT_HPP
 
 #include "Enemy.hpp"
+#define HEGHT_STANDARD_UNIT 2
+#define WIDTH_STANDARD_UNIT 3
 
 
-class StandartUnit : public Enemy
+class StandardUnit : public Enemy
 {
 public:
-	explicit StandartUnit(t_location location);
-	StandartUnit();
+	explicit StandardUnit(t_location location);
+	StandardUnit();
 
 	void		setLocation(t_location const &location);
 	void		setWeapon(const Weapon &weapon);
@@ -20,11 +22,13 @@ public:
 
 	t_bullet	*shot(t_bullet *bullets_list);
 	void		death();
-	void		takeDamage(Bullet bullet) {}
+
+	void takeDamage(Bullet &bullet);
 
 private:
 	Weapon _weapon;
-	char avatar[2][3];
+public:
+	char avatar[HEGHT_STANDARD_UNIT][WIDTH_STANDARD_UNIT] = {"SU", "KA"};
 
 };
 

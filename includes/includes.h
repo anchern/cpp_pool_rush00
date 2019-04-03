@@ -14,6 +14,8 @@
 
 class Bullet;
 class Game;
+class StandardUnit;
+class GameEntity;
 
 typedef struct	s_location
 {
@@ -32,5 +34,12 @@ Bullet *default_bullet_elem(t_location const &location);
 void	initGame(Game &game, const std::string &player_name_1);
 void	setEntitiesOnField(Game &game);
 void	setEntitiesOnPrintField(Game &game);
+void	standardUnitGeneration(Game &game);
+void 	movePlayer(Game &game);
+void	moveBullets(Game &game);
+void	moveStantardUnits(Game &game);
+void	checkCollision(GameEntity *GE1, GameEntity *GE2, Game &game);
+void	delete_bullet(t_bullet *bullet, Bullet *bullet1);
+
 
 #endif //C_POOL_INCLUDES_H

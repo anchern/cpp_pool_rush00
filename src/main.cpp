@@ -4,26 +4,55 @@
 
 int main()
 {
+	int i = 0;
 	Game &game = Game::instance();
+	int saveDegrees;
+
 	initGame(game, "Kek");
-	game.setBullets(game.getPlayers(0).shot(game.getBullets()));
-	setEntitiesOnPrintField(game);
-	std::cout << "Player: " << game.getPlayers(0).get_name() << std::endl;
-
-	for (int i = 0; i < HEIGHT; i++)
+	standardUnitGeneration(game);
+	while (true)
 	{
-		for (int j = 0; j < WIDTH; j++)
-			std::cout << game.getField(i, j);
-		std::cout << std::endl;
-	}
-	initscr();
-	int a = getch();
-	int b = getch();
-	int c = getch();
-	int d = getch();
-	printw("%i %i %i %i", a, b, c, d);
-	getch();
-	endwin();
+		game.clsField();
+		game.clsGameEntities();
+		setEntitiesOnField(game);
 
-	return (0);
+		setEntitiesOnPrintField(game);
+		std::cout << "----------------------------------------------------"
+		<< std::endl;
+		game.printField();
+		std::cout << "----------------------------------------------------"
+				  << std::endl;
+		switch (getchar())
+		{
+			case 'w':
+				game.getPlayers()[0].set_degrees(90);
+				movePlayer(game);
+				break ;
+			case 's':
+				game.getPlayers()[0].set_degrees(270);
+				movePlayer(game);
+				break ;
+			case 'd':
+				game.getPlayers()[0].set_degrees(180);
+				movePlayer(game);
+				break ;
+			case 'a':
+				game.getPlayers()[0].set_degrees(0);
+				movePlayer(game);
+				break ;
+			case ' ':
+				saveDegrees = game.getPlayers()[0].get_degrees();
+				game.getPlayers()[0].set_degrees(90);
+				game.setBullets(game.getPlayers()[0].shot(game.getBullets()));
+				game.getPlayers()[0].set_degrees(saveDegrees);
+				break ;
+			case 'q':
+				return (0);
+			default:
+				break;
+		}
+		moveStantardUnits(game);
+		moveBullets(game);
+		i++;
+	}
 }

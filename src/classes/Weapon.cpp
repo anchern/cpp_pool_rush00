@@ -33,3 +33,8 @@ void Weapon::set_bullet(const Bullet &_bullet)
 {
 	Weapon::_bullet = _bullet;
 }
+
+void Weapon::set_location(t_location location)
+{
+	_location = location;
+}

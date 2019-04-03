@@ -20,7 +20,7 @@ Player::Player()
 	this->_damage = 0;
 }
 
-void Player::takeDamage(Bullet bullet)
+void Player::takeDamage(Bullet &bullet)
 {
 	if (bullet.get_damage() > _hp)
 		_hp = 0;
@@ -29,7 +29,7 @@ void Player::takeDamage(Bullet bullet)
 
 void Player::death()
 {
-
+	exit(0);
 }
 
 t_bullet *Player::shot(t_bullet *bullets_list)
@@ -71,17 +71,20 @@ const Weapon *Player::get_weapon() const
 	return _weapon;
 }
 
-unsigned int Player::get_hp() const
-{
-	return _hp;
-}
-
-unsigned int Player::get_maxHp() const
-{
-	return _maxHp;
-}
-
 t_location Player::getLocation()
 {
 	return _location;
+}
+
+void Player::move(int degrees)
+{
+	t_location tmp_loc;
+
+	this->_location.x -= (int)std::round(std::cos(degrees * M_PI / 180 )) *
+						 _speed;
+	this->_location.y -= (int)std::round(std::sin(degrees * M_PI / 180)) *
+						 _speed;
+	tmp_loc = _location;
+	tmp_loc.x = _location.x + ((WIDTH_PLAYER_1 - 1) / 2);
+	_weapon[0].set_location(tmp_loc);
 }

@@ -13,7 +13,19 @@ class Character : public GameEntity
 public:
 	virtual t_bullet *shot(t_bullet *bullets_list) = 0;
 	virtual void death() = 0;
-	virtual void takeDamage(Bullet bullet) = 0;
+	virtual void takeDamage(Bullet &bullet) = 0;
+
+
+public:
+	void set_hp(unsigned int _hp);
+
+protected:
+public:
+	unsigned int get_hp() const;
+
+protected:
+	unsigned _hp = 0;
+	unsigned _maxHp = 0;
 };
 
 

@@ -5,9 +5,9 @@ set(CMAKE_CXX_STANDARD 11)
 
 include_directories(src/classes)
 include_directories(includes)
-find_package(Curses REQUIRED)
+#find_package(Curses REQUIRED)
 
-include_directories(${CURSES_INCLUDE_DIR})
+#include_directories(${CURSES_INCLUDE_DIR})
 
 add_executable(rush00
         src/classes/Bullet.cpp
@@ -20,8 +20,8 @@ add_executable(rush00
         src/classes/Player.hpp
         includes/includes.h src/classes/Weapon.cpp src/classes/Weapon.hpp
         src/classes/Enemy.cpp src/classes/Enemy.hpp src/classes/Game.cpp
-        src/classes/Game.hpp src/classes/StandartUnit.cpp
-        src/classes/StandartUnit.hpp src/CreateNewBullet.cpp
-        src/DeleteBullets.cpp src/main.cpp src/CreateGame.cpp src/SetEntityOnField.cpp)
+        src/classes/Game.hpp src/classes/StandardUnit.cpp
+        src/classes/StandardUnit.hpp src/CreateNewBullet.cpp
+        src/DeleteBullets.cpp src/main.cpp src/CreateGame.cpp src/SetEntityOnField.cpp src/StandardUnitGeneration.cpp src/moveGameEntities.cpp src/checkCollision.cpp src/deleteDeathEntities.cpp)
 
-target_link_libraries(rush00 ${CURSES_LIBRARIES})
+target_link_libraries(rush00 -lncurses)

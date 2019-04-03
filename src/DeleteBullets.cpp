@@ -22,13 +22,13 @@ void free_bullets(t_bullet *bullet)
 }
 
 void	delete_bullet(t_bullet *bullet,
-					  t_bullet *deleted_elem)
+					  Bullet *bullet1)
 {
 	t_bullet *previous_elem = nullptr;
 
 	while (bullet != nullptr)
 	{
-		if (bullet->bullet == deleted_elem->bullet)
+		if (bullet->bullet == bullet1)
 		{
 			delete bullet->bullet;
 			if (previous_elem == nullptr)
