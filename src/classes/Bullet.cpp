@@ -17,7 +17,7 @@ Bullet::Bullet()
 	_location.x = -1;
 	_location.y = -1;
 	_damage = 1;
-	_speed = 2;
+	_speed = 3;
 }
 
 
@@ -49,4 +49,10 @@ void Bullet::setDegrees(int degrees)
 char Bullet::get_type() const
 {
 	return _type;
+}
+
+void Bullet::death()
+{
+	this->_location.x = -1;
+	this->_location.y = -1;
 }

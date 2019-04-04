@@ -6,7 +6,7 @@
 /*   By: dlewando <dlewando@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:33:07 by dlewando          #+#    #+#             */
-/*   Updated: 2019/03/28 15:47:55 by dlewando         ###   ########.fr       */
+/*   Updated: 2019/04/04 02:41:04 by dlewando         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ void free_bullets(t_bullet *bullet)
 	delete bullet;
 }
 
-void	delete_bullet(t_bullet *bullet,
+t_bullet	*delete_bullet(t_bullet *bullet,
 					  Bullet *bullet1)
 {
 	t_bullet *previous_elem = nullptr;
+	t_bullet *tmp = bullet;
 
 	while (bullet != nullptr)
 	{
@@ -36,17 +37,19 @@ void	delete_bullet(t_bullet *bullet,
 				previous_elem = bullet;
 				bullet = bullet->next;
 				delete previous_elem;
-				return;
+				return (bullet);
 			}
 			else
 			{
 				previous_elem->next = bullet->next;
 				delete bullet;
-				return;
+				bullet = previous_elem->next;
+				return (tmp);
 			}
 		}
 		previous_elem = bullet;
 		bullet = bullet->next;
 	}
+	return (tmp);
 }
 

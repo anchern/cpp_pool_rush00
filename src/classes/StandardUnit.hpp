@@ -24,6 +24,7 @@ public:
 	void		death();
 
 	void takeDamage(Bullet &bullet);
+	void	move(int degrees);
 
 private:
 	Weapon _weapon;

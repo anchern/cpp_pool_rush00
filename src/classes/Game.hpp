@@ -14,7 +14,7 @@
 
 
 
-#define NUMBEROFPLAYERS 2
+#define NUMBEROFPLAYERS 1
 #define STANDART_UNITS_NUMBER 50
 
 
@@ -45,11 +45,18 @@ private:
 	time_t time = 0;
 	unsigned score = 0;
 
+public:
+	void setScore(unsigned int score);
 
+private:
 	Player players[NUMBEROFPLAYERS];
 	StandardUnit StandartUnits[STANDART_UNITS_NUMBER];
 	GameEntity *gameEntities[HEIGHT][WIDTH];
 	t_bullet *bullets;
+public:
+	unsigned int getScore() const;
+
+private:
 
 	char field[HEIGHT][WIDTH + 1];
 };

@@ -18,6 +18,8 @@ void	standardUnitGeneration(Game &game)
 		if (game.getStandartUnits()[i].get_location().x == -1)
 		{
 			game.getStandartUnits()[i].setLocation(location);
+			game.getStandartUnits()[i].set_hp(
+			game.getStandartUnits()[i].get_maxHp());
 			break;
 		}
 	}

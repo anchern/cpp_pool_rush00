@@ -20,6 +20,8 @@ public:
 	const t_location &get_location() const;
 	void set_location(const t_location &_location);
 	void setDegrees(int degrees);
+	void death();
+
 
 	char get_type() const;
 

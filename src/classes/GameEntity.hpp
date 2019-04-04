@@ -12,7 +12,9 @@ class GameEntity
 {
 public:
 	virtual GameEntity *getType() = 0;
-	void		move(int degrees);
+
+	void	move(int degrees);
+	virtual void death() = 0;
 
 	int get_speed() const;
 
@@ -26,9 +28,11 @@ public:
 
 	void set_speed(int _speed);
 
+	void set_damage(int _damage);
+
 protected:
 	t_location	_location;
-	unsigned	_damage = 0;
+	int			_damage = 0;
 	int			_degrees = 0;
 	int			_speed = 1;
 };

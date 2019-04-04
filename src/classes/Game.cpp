@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "ncurses.h"
 
 Game::Game()
 {
@@ -68,7 +69,9 @@ void Game::clsField()
 void Game::printField()
 {
 	for (auto &i : field)
-		std::cout << i << std::endl;
+		printw("%s\n", i);
+	refresh();
+//		std::cout << i << std::endl;
 }
 
 void Game::clsGameEntities()
@@ -76,5 +79,15 @@ void Game::clsGameEntities()
 	for (auto &i : gameEntities)
 		for (auto &j : i)
 			j = nullptr;
+}
+
+void Game::setScore(unsigned int score)
+{
+	Game::score += score;
+}
+
+unsigned int Game::getScore() const
+{
+	return score;
 }
 

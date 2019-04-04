@@ -14,3 +14,8 @@ unsigned int Character::get_hp() const
 {
 	return _hp;
 }
+
+unsigned int Character::get_maxHp() const
+{
+	return _maxHp;
+}

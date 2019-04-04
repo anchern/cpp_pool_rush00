@@ -18,6 +18,8 @@ public:
 
 	void set_location(t_location location);
 
+	const Bullet &get_bullet() const;
+
 private:
 	t_location	_location;
 	char 		_avatar;

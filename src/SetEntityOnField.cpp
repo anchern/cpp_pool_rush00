@@ -17,10 +17,11 @@ void	setPlayersOnField(Game &game)
 				if (game.getPlayers()[k]._avatar[i][j] != ' ')
 				{
 					if (game.getGameEntitys(tmp_loc.y + i, tmp_loc.x + j) !=
-						NULL)
+						NULL && game.getGameEntitys(tmp_loc.y + i,
+													tmp_loc.x + j) != (GameEntity *) &game.getPlayers()[k])
 						checkCollision(game.getGameEntitys(tmp_loc.y + i,
 										tmp_loc.x + j),
-										(GameEntity *) &game.getPlayers()[i],
+										(GameEntity *) &game.getPlayers()[k],
 										game);
 					else
 						game.setGameEntitys(tmp_loc.y + i, tmp_loc.x + j,
@@ -47,7 +48,8 @@ void	setStandardUnitsOnField(Game &game)
 				if (game.getStandartUnits()[i].avatar[j][k] != ' ')
 				{
 					if (game.getGameEntitys(tmp_loc.y + j, tmp_loc.x + k) !=
-							NULL)
+							NULL && game.getGameEntitys(tmp_loc.y + j,
+									tmp_loc.x + k) != (GameEntity *)&game.getStandartUnits()[i])
 						checkCollision(game.getGameEntitys(tmp_loc.y + j, tmp_loc.x +
 						k), (GameEntity *)&game.getStandartUnits()[i], game);
 					else
@@ -68,22 +70,40 @@ void	setBulletsOnField(Game &game)
 	while (bullet != nullptr)
 	{
 		tmp_loc = bullet->bullet->get_location();
-		if (game.getGameEntitys(tmp_loc.y , tmp_loc.x)
-		!=
-		NULL)
+		if (tmp_loc.y < 0 || tmp_loc.y >= HEIGHT ||
+			tmp_loc.x < 0 || tmp_loc.x >= WIDTH || bullet->bullet->get_location().x == -1)
+		{
+			bullet = bullet->next;
+			continue;
+		}
+		if (game.getGameEntitys(tmp_loc.y , tmp_loc.x) != NULL &&
+			game.getGameEntitys(tmp_loc.y, tmp_loc.x) !=
+			(GameEntity *)bullet->bullet)
+		{
 			checkCollision(game.getGameEntitys(tmp_loc.y, tmp_loc.x),
-					(GameEntity *)bullet->bullet, game);
-		game.setGameEntitys(tmp_loc.y, tmp_loc.x, bullet->bullet);
+						   (GameEntity *) bullet->bullet, game);
+			bullet->bullet->set_damage(0);
+
+		}
+		if (tmp_loc.y > 0 && tmp_loc.y < HEIGHT &&
+				tmp_loc.x > 0 && tmp_loc.x < WIDTH)
+			game.setGameEntitys(tmp_loc.y, tmp_loc.x, bullet->bullet);
 		bullet = bullet->next;
 	}
 }
 
-void	setEntitiesOnField(Game &game)
-{
-	setStandardUnitsOnField(game);
-	setBulletsOnField(game);
-	setPlayersOnField(game);
-}
+//void	setEntitiesOnField(Game &game)
+//{
+//	for (int i = 0; i < game.getStandartUnits()->get_speed(); i++)
+//		setStandardUnitsOnField(game);
+//	if (game.getBullets() != NULL)
+//	{
+//		for (int i = 0; i < game.getBullets()->bullet->get_speed(); i++)
+//			setBulletsOnField(game);
+//	}
+//	for (int i = 0; i < game.getPlayers()->get_speed(); i++)
+//		setPlayersOnField(game);
+//}
 
 
 void	setEntitiesOnPrintField(Game &game)
@@ -120,7 +140,9 @@ void	setEntitiesOnPrintField(Game &game)
 	while (bullet != nullptr)
 	{
 		tmp_loc = bullet->bullet->get_location();
-		game.setFieldElem(tmp_loc.y, tmp_loc.x, bullet->bullet->get_type());
+		if (tmp_loc.y > 0 && tmp_loc.y < HEIGHT && tmp_loc.x > 0 && tmp_loc.x
+		        < WIDTH)
+			game.setFieldElem(tmp_loc.y, tmp_loc.x, bullet->bullet->get_type());
 		bullet = bullet->next;
 	}
 }

@@ -5,8 +5,8 @@
 #ifndef C_POOL_INCLUDES_H
 #define C_POOL_INCLUDES_H
 
-#define HEIGHT	50
-#define WIDTH	50
+#define HEIGHT	60
+#define WIDTH	120
 
 #include <iostream>
 #include <cmath>
@@ -30,16 +30,23 @@ typedef struct	s_bullet
 }				t_bullet;
 
 t_bullet	*push_bullet_front(t_bullet *bullet, Bullet *bullet1);
-Bullet *default_bullet_elem(t_location const &location);
-void	initGame(Game &game, const std::string &player_name_1);
-void	setEntitiesOnField(Game &game);
-void	setEntitiesOnPrintField(Game &game);
-void	standardUnitGeneration(Game &game);
-void 	movePlayer(Game &game);
-void	moveBullets(Game &game);
-void	moveStantardUnits(Game &game);
-void	checkCollision(GameEntity *GE1, GameEntity *GE2, Game &game);
-void	delete_bullet(t_bullet *bullet, Bullet *bullet1);
+Bullet		*default_bullet_elem(t_location const &location);
+void		initGame(Game &game, const std::string &player_name_1);
+void		setEntitiesOnField(Game &game);
+void		setEntitiesOnPrintField(Game &game);
+void		standardUnitGeneration(Game &game);
+void 		movePlayer(Game &game);
+void		moveBullets(Game &game);
+void		moveStantardUnits(Game &game);
+void		checkCollision(GameEntity *GE1, GameEntity *GE2, Game &game);
+t_bullet	*delete_bullet(t_bullet *bullet, Bullet *bullet1);
+void		setPlayersOnField(Game &game);
+void		setStandardUnitsOnField(Game &game);
+void		setBulletsOnField(Game &game);
 
+
+
+
+void print_bull_coords(t_bullet *bullets);
 
 #endif //C_POOL_INCLUDES_H
