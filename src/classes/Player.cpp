@@ -19,7 +19,7 @@ Player::Player()
 	_maxHp = 5;
 	_hp = _maxHp;
 	_degrees = 90;
-	_speed = 2;
+	_speed = 1;
 	this->_damage = -1;
 }
 
@@ -112,7 +112,8 @@ void Player::death()
 		   "                                                               `;##+`                ..                            .;        `+`                                                       \n"
 		   "                                                                                                                                                                                       \n"
 		   "                                                                                                                                                                                       \n"
-		   "                                                                                                                                                                                                        \n"
+		   "                                                                                                         "
+	 "                                                                                               \n\n"
 		   "                                                                                                                                                                                         ");
 	refresh();
 	usleep(1000000);

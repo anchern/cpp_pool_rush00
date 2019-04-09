@@ -1,9 +1,24 @@
 #include "../includes/includes.h"
 #include "classes/Game.hpp"
 
+bool	checkPlayersCollision(Game &game, GameEntity *gameEntity)
+{
+	int i;
+
+	i = 0;
+	while (i < NUMBEROFPLAYERS)
+	{
+		if (gameEntity == (GameEntity *)&game.getPlayers()[i])
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 void	setPlayersOnField(Game &game)
 {
 	t_location tmp_loc;
+	GameEntity *gameEntity;
 
 	for (int k = 0; k < NUMBEROFPLAYERS; k++)
 	{
@@ -16,16 +31,13 @@ void	setPlayersOnField(Game &game)
 			{
 				if (game.getPlayers()[k]._avatar[i][j] != ' ')
 				{
-					if (game.getGameEntitys(tmp_loc.y + i, tmp_loc.x + j) !=
-						NULL && game.getGameEntitys(tmp_loc.y + i,
-													tmp_loc.x + j) != (GameEntity *) &game.getPlayers()[k])
-						checkCollision(game.getGameEntitys(tmp_loc.y + i,
-										tmp_loc.x + j),
-										(GameEntity *) &game.getPlayers()[k],
-										game);
+					gameEntity = game.getGameEntitys(tmp_loc.y + i, tmp_loc.x + j);
+					if (gameEntity != NULL && checkPlayersCollision(game, gameEntity))
+					{
+						checkCollision(gameEntity, (GameEntity *) &game.getPlayers()[k], game);
+					}
 					else
-						game.setGameEntitys(tmp_loc.y + i, tmp_loc.x + j,
-										&game.getPlayers()[k]);
+						game.setGameEntitys(tmp_loc.y + i, tmp_loc.x + j, &game.getPlayers()[k]);
 				}
 			}
 		}
