@@ -14,8 +14,7 @@
 
 
 
-#define NUMBEROFPLAYERS 1
-#define STANDART_UNITS_NUMBER 50
+
 
 
 class Game

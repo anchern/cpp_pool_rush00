@@ -10,7 +10,13 @@
 
 #include <iostream>
 #include <cmath>
+#include <thread>
 
+#define MENU_ITEM 3
+#define PAUSE_ITEM 2
+#define MULTIPLAYERMENU_ITEM 2
+#define NUMBEROFPLAYERS 1
+#define STANDART_UNITS_NUMBER 50
 
 class Bullet;
 class Game;
@@ -43,8 +49,13 @@ t_bullet	*delete_bullet(t_bullet *bullet, Bullet *bullet1);
 void		setPlayersOnField(Game &game);
 void		setStandardUnitsOnField(Game &game);
 void		setBulletsOnField(Game &game);
+void		standardUnitActions(int j, Game &game);
+void		delete_and_move_death_bullets(Game &game);
+void		score_calc(Game &game);
+void		printField(Game &game, time_t sTime);
 
-
+int			menu(std::string *menu_items, int size);
+void		player1Action(int &getch_ref, Game &game, std::thread &thr1, bool &mut_flag);
 
 
 void print_bull_coords(t_bullet *bullets);

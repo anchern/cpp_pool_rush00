@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/achernys/cpp_pool_rush00/src/classes -I/Users/achernys/cpp_pool_rush00/includes 
+CXX_INCLUDES = -I/Users/dlewando/cpp_pool_rush00/src/classes -I/Users/dlewando/cpp_pool_rush00/includes 
 

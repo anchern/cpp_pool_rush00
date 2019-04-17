@@ -2,10 +2,23 @@
 #include <iostream>
 #include "ncurses.h"
 #include <unistd.h>
-#include <thread>
 
-#define MENU_ITEM 3
-#define PAUSE_ITEM 2
+#include <stdio.h>
+#include <sys/socket.h>
+#include <stdlib.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <arpa/inet.h>
+#include <thread>
+#include <mutex>
+#include <chrono>
+
+#include <unistd.h>
+#include <iostream>
+
+#define PORT 4242
+
+
 
 std::mutex mutex;
 
@@ -29,215 +42,30 @@ void	getch_ret(int &getch_ref, bool &mut_flag)
 		getch_ref = getch();
 		if (getch_ref == 27)
 			mut_flag = true;
-		usleep(500);
+		usleep (100);
 	}
 }
 
 
-void	delete_and_move_death_bullets(Game &game)
+
+
+void	readFromServer(int &sock, bool &mut_flag)
 {
-	t_bullet *bulletTmp;
-	t_bullet *bulletTmp1;
+	int getch_client;
 
-	bulletTmp = game.getBullets();
-	bulletTmp1 = bulletTmp;
-	while (bulletTmp != nullptr)
-	{
-		if (bulletTmp->bullet->get_location().x == -1)
-		{
-			bulletTmp1 = delete_bullet(bulletTmp1, bulletTmp->bullet);
-			bulletTmp = bulletTmp1;
-			continue ;
-		}
-		bulletTmp = bulletTmp->next;
-	}
-	game.setBullets(bulletTmp1);
-	if (game.getBullets() != nullptr)
-	{
-		for (int i = 0; i < game.getBullets()->bullet->get_speed(); i++)
-		{
-			moveBullets(game);
-			setBulletsOnField(game);
-			if (game.getBullets() == nullptr)
-				break ;
-		}
-	}
-}
-
-void	player1Action(int &getch_ref, Game &game, std::thread &thr1, bool &mut_flag)
-{
-	int saveDegrees;
-	std::string pause_items[PAUSE_ITEM] = {	"RESUME GAME",
-											  "EXIT"};
-
+	usleep(10000);
 	while (true)
 	{
-		switch (getch_ref)
-		{
-			case 27:
-				switch (menu(pause_items, PAUSE_ITEM))
-				{
-					case 1:
-						break;
-					case 2:
-						clear();
-						printw("BYE!");
-						refresh();
-						usleep(100000);
-						endwin();
-						thr1.detach();
-						exit(0);
-					default:
-						break;
-				}
-				mut_flag = false;
-				break;
-			case KEY_UP:
-				game.getPlayers()[0].set_degrees(90);
-				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
-				{
-					movePlayer(game);
-					setPlayersOnField(game);
-				}
-				break;
-			case KEY_DOWN:
-				game.getPlayers()[0].set_degrees(270);
-				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
-				{
-					movePlayer(game);
-					setPlayersOnField(game);
-				}
-				break;
-			case KEY_RIGHT:
-				game.getPlayers()[0].set_degrees(180);
-				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
-				{
-					movePlayer(game);
-					setPlayersOnField(game);
-				}
-				break;
-			case KEY_LEFT:
-				game.getPlayers()[0].set_degrees(0);
-				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
-				{
-					movePlayer(game);
-					setPlayersOnField(game);
-				}
-				break;
-			case ' ':
-				setPlayersOnField(game);
-				saveDegrees = game.getPlayers()[0].get_degrees();
-				game.getPlayers()[0].set_degrees(90);
-				game.setBullets(game.getPlayers()[0].shot(game.getBullets()));
-				game.getPlayers()[0].set_degrees(saveDegrees);
-				break;
-			default:
-				setPlayersOnField(game);
-		}
-		getch_ref = 0;
-		usleep(500);
+		if ((getch_client = getch()) == ' ')
+			beep();
+		if (getch_client == 27)
+			mut_flag = true;
+		if (getch_client == '\n')
+			mut_flag = false;
+		send(sock, &getch_client, 4, 0);
 	}
 }
 
-void score_calc(Game &game)
-{
-	int number_of_units = 0;
-	int number_of_units_tmp = 0;
-	for (int i = 0; i < STANDART_UNITS_NUMBER; i++)
-	{
-		if (game.getStandartUnits()[i].get_location().x != -1)
-			number_of_units++;
-	}
-	for (int i = 0; i < NUMBEROFPLAYERS; i++)
-		if (game.getPlayers()[i].get_hp() == 0)
-			game.getPlayers()[i].death();
-	for (int i = 0; i < STANDART_UNITS_NUMBER; i++)
-		if (game.getStandartUnits()[i].get_hp() == 0)
-			game.getStandartUnits()[i].death();
-	for (int i = 0; i < STANDART_UNITS_NUMBER; i++)
-	{
-		if (game.getStandartUnits()[i].get_location().x != -1)
-			number_of_units_tmp++;
-	}
-	if (number_of_units - number_of_units_tmp > 0)
-		game.setScore(number_of_units - number_of_units_tmp);
-}
-
-void	printField(Game &game, time_t sTime)
-{
-	time_t time;
-
-	std::time(&time);
-	clear();
-	printw("Player: %s | HP: %d | Time: %.2d:%.2d | Score: %u\n",game.getPlayers()[0].get_name().c_str(),
-		   game.getPlayers()[0].get_hp(), (time - sTime) /60,(time - sTime) % 60, game.getScore());
-	for (int k = 0; k < WIDTH; k++)
-		printw("-");
-	printw("\n");
-	game.printField();
-	for (int k = 0; k < WIDTH; k++)
-		printw("-");
-	printw("\n");
-	refresh();
-}
-
-void	standardUnitActions(int j, Game &game)
-{
-	if (j % 23 == 0)
-	{
-		for (int i = 0; i < STANDART_UNITS_NUMBER; i++)
-			if (game.getStandartUnits()[i].get_location().x != -1)
-				game.setBullets(game.getStandartUnits()[i].shot(game.getBullets()));
-	}
-	else
-	{
-		for (int i = 0; i < game.getStandartUnits()->get_speed(); i++)
-		{
-			moveStantardUnits(game);
-			setStandardUnitsOnField(game);
-		}
-	}
-}
-
-int 	menu(std::string *menu_items, int size)
-{
-	int			menu_i = 1;
-	bool		menu_lable = false;
-
-	while (true)
-	{
-		clear();
-		for (int i = 0; i < size; i++)
-		{
-			if (menu_i == i + 1)
-				printw("-> %s\n", menu_items[i].c_str());
-			else
-				printw("   %s\n", menu_items[i].c_str());
-		}
-		refresh();
-		switch (getch())
-		{
-			case KEY_UP:
-				menu_i--;
-				break;
-			case KEY_DOWN:
-				menu_i++;
-				break ;
-			case '\n':
-				menu_lable = true;
-				break;
-			default:
-				break;
-		}
-		if (menu_i == size + 1)
-			menu_i = 1;
-		else if (menu_i == 0)
-			menu_i = size;
-		if (menu_lable)
-			break ;
-	}
-	return (menu_i);
-}
 
 int main()
 {
@@ -247,51 +75,324 @@ int main()
 	int			getch_ref;
 	Game		&game = Game::instance();
 	bool		mut_flag = false;
+	int			serverORclient = 0;
+	char name[64];
 	std::string menu_items[MENU_ITEM] = {	"SINGLE PLAYER",
 									   		"MULTI PLAYER",
 											 "EXIT"};
+	std::string multiPlayerMenu_items[MULTIPLAYERMENU_ITEM] = {"Server", "Client"};
+	std::chrono::system_clock::time_point tp;
+	std::chrono::system_clock::duration start_program;
+
+
+
 
 
 	setlocale(LC_ALL, "");
-	initscr();
+	WINDOW *window = initscr();
 	noecho();
 	keypad(stdscr, TRUE);
 	initGame(game, "Player1");
-	std::time(&sTime);
-
 
 	switch (menu(menu_items, MENU_ITEM))
 	{
 		case 1:
 			break;
 		case 2:
+			switch (menu(multiPlayerMenu_items, MULTIPLAYERMENU_ITEM))
+			{
+				case 1:
+					serverORclient = 1;
+					break;
+				case 2:
+					serverORclient = 2;
+					break;
+				default:
+					break;
+			}
 			break;
 		case 3:
-			printw("Bye!\n");
+			clear();
+			refresh();
 			return (0);
 		default:
 			break;
 	}
 
-	std::thread	tKeyInput(getch_ret, std::ref(getch_ref), std::ref(mut_flag)); //thread for read from keyboard
-	std::thread tPlayer1Action(player1Action, std::ref(getch_ref), std::ref(game),
-			std::ref(tKeyInput), std::ref(mut_flag));
 
-
-	while (true)
+	if (serverORclient == 2) // CLIENT MOD
 	{
-		while (mut_flag)
-			;
-		if (j % 18 == 0)
-			standardUnitGeneration(game);
-		score_calc(game);
-		setEntitiesOnPrintField(game);
-		printField(game, sTime);
-		game.clsField();
-		game.clsGameEntities();
-		usleep(100000);
-		standardUnitActions(j, game);
-		delete_and_move_death_bullets(game);
-		j++;
+		struct sockaddr_in address;
+		int sock = 0, valread;
+		struct sockaddr_in serv_addr;
+		char buffer[HEIGHT * WIDTH] = {0};
+
+		if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+		{
+			printf("\n Socket creation error \n");
+			return -1;
+		}
+		memset(&serv_addr, '0', sizeof(serv_addr));
+
+		serv_addr.sin_family = AF_INET;
+		serv_addr.sin_port = htons(PORT);
+
+		// Convert IPv4 and IPv6 addresses from text to binary form
+		if(inet_pton(AF_INET, "10.111.5.7", &serv_addr.sin_addr)<=0)
+		{
+			clear();
+			printw("\nInvalid address/ Address not supported \n");
+			refresh();
+			return -1;
+		}
+		if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
+		{
+			clear();
+			printw("\nConnection Failed \n");
+			refresh();
+			return -1;
+		}
+		std::thread thr1(readFromServer, std::ref(sock), std::ref(mut_flag));
+		long long epoch_server = 0;
+		char key;
+		while (true)
+		{
+			while (mut_flag)
+			{
+				valread = read(sock, buffer, 1024);
+				clear();
+				printw("%s\n", buffer);
+				refresh();
+				bzero(buffer, sizeof(buffer));
+			}
+
+
+
+//			if ((valread = read(sock, buffer, 1024)) <= 0)
+//			{
+//				clear();
+//				::move(100, 100);
+//				refresh();
+//				printw("                                                                                                                                                                              \n"
+//					   "                                                                                                                                                                                       \n"
+//					   "                                                                                                                                                                                       \n"
+//					   "                                                                                 `:                                                                                                    \n"
+//					   "                                                               `+@@@'            @+@            .;           +,           `...,,,                                                      \n"
+//					   "                                                              +#;;;;'@`         +;;;'          .#'#         @;+.       ;@@#+++++'@                                                     \n"
+//					   "                                                            `@';;;;;;;@         #;;;#          #;;'`       .';;@      #';;;;;;;;;'.                                                    \n"
+//					   "                                                           `#;;;;;;;;;'        `';;;;+         #;;;+       #;;;#     ,';;;;;;;;;;;+                                                    \n"
+//					   "                                                           #;;;;;;;;;;;.       +;;;;;#         +;;;#       @;;;'     +;;;;;;;;;;;;+                                                    \n"
+//					   "                                                          @;;;;;;;;;;;'`       @;;;;;;;        +;;;'`      +;;;;.    +;;;;;;;;;;;'.                                                    \n"
+//					   "                                                         .';;;;;'@+@';@        ';;;;;;@        ';;;;#     .;;;;;'    .';;;'''++'+#                                                     \n"
+//					   "                                                         @;;;;;@;   '#        :;;;;;;;'        ';;;;#     +;;;;;#     #;;;#;:,,:.                                                      \n"
+//					   "                                                         +;;;;@               #;;;#;;;;;      `;;;;;'`    @;;;;;@     #;;;;                                                            \n"
+//					   "                                                        ,;;;;@                #;;;#+;;;@      `;;;;;;+    +;;;;;+     #;;;;                                                            \n"
+//					   "                                                        +;;;',               `';;;:#;;;+      .;;;;;;#   .;;;;;;'     #;;;;                                                            \n"
+//					   "                                                        @;;;@   ```````      ;;;;' .;;;;,     :;;;;;;'`  +;;;;;;;.    #;;;; ``.:                                                       \n"
+//					   "                                                        #;;;'  @#######+     #;;;#  +;;;#     ;;;;';;;'  @;;;#;;;:    #;;;@@##+'@                                                      \n"
+//					   "                                                        +;;;. +;;;;;;;;+`    #;;;#  @;;;#     +;;;@;;;@  +;;;@;;;+    #;;;;;;;;;;.                                                     \n"
+//					   "                                                        +;;;. @;;;;;;;;;'    ';;;@@@@;;;'@+   +;;;@;;;' `;;;'@;;;#    #;;;;;;;;;;'                                                     \n"
+//					   "                                                        +;;;` #;;;;;;;;;+   ,;;;;;;;;;;;;;':  #;;;#';;;'+;;;#';;;@    #;;;;;;;;;;'                                                     \n"
+//					   "                                                        +;;;. @;;;;;;;;;,   +;;;;;;;;;;;;;;@  #;;;+@;;;@@;;;@,;;;#    #;;;;;;;;;'`                                                     \n"
+//					   "                                                        #;;;: .#;;;;;;;@    @;;;;;;;;;;;;;;#  @;;;+';;;'+;;;;`;;;+    #;;;;;;;'##                                                      \n"
+//					   "                                                        @;;;#  .#@#@;;;#    #;;;;;;;;;;;;;;@  #;;;' ';;;;;;'` ';;'    #;;;@##+;`                                                       \n"
+//					   "                                                        #;;;#      #;;;#    ';;;;;;;;;;;;;+,  #;;;: @;;;;;;+  +;;;`   #;;;;                                                            \n"
+//					   "                                                        ,;;;;,     #;;;@   .;;;'@@@@@##;;;#   #;;;, ';;;;;;@  #;;;,   #;;;;                                                            \n"
+//					   "                                                         ';;;@     #;;;@   ;;;;#      @;;;@   +;;;.  ';;;;;'  #;;;;   #;;;;    .,                                                      \n"
+//					   "                                                         @;;;;@   `#;;;#   @;;;@      +;;;#   ';;;`  @;;;;;.  @;;;+   #;;;#''#@++#                                                     \n"
+//					   "                                                         ;;;;;;@###;;;;#   @;;;#      :;;;+   ';;;`  ';;;;+   #;;;@   #;;;;'';;;;'`                                                    \n"
+//					   "                                                          #;;;;;;;;;;;;'   #;;;;      `;;;'  `';;;`   ';;;@   +;;;@   #;;;;;;;;;;;:                                                    \n"
+//					   "                                                          ';;;;;;;;;;;+`   ';;;.       ';;'  .;;;'    @;;;'   ';;;@   @;;;;;;;;;;;:                                                    \n"
+//					   "                                                           @;;;;;;;;;;#    ';;'        +;;;` .;;;+    ;;;+    :;;;#   #;;;;;;;;;;'`                                                    \n"
+//					   "                                                           `@;;;;;;;;@     #;;#        #;;+  `;;;#     @@'    `;;;@   `+;;;;;;;'+#                                                     \n"
+//					   "                                                            `@';;;;+#      ''''        '';#   #;;+             #;',    ,@@@##@@+.                                                      \n"
+//					   "                                                              ;@@@@:        +;          +#    ,@#              .@'                                                                     \n"
+//					   "                                                                                                                      `:;,                                                             \n"
+//					   "                                                                 :##'`                      `                       ,@#''+@'                                                           \n"
+//					   "                                                               ,@';;'##        @##         ##@      `;#####@@;     #+;;;;;;'@                                                          \n"
+//					   "                                                              ;+;;;;;;'@      #;;+        .';;,   .@#';;;;;;;+`   @;;;;;;;;;;#                                                         \n"
+//					   "                                                             .+;;;;;;;;;@     #;;;;       @;;;#   #;;;;;;;;;;;'  .';;;;;;;;;;';                                                        \n"
+//					   "                                                             @;;;;;;;;;;':    @;;;@       +;;;#  ;;;;;;;;;;;;;#  +;;;;;;;;;;;;#                                                        \n"
+//					   "                                                            ';;;;;;;;;;;;@    #;;;#      :;;;;;  ';;;;;;;;;;;;'  #;;;;;++';;;;;.                                                       \n"
+//					   "                                                            #;;;;#@@#;;;;'`   ;;;;'`     @;;;'   :;;;;;;;;;;;#`  ';;;;@,.;#;;;;#                                                       \n"
+//					   "                                                           :;;;;#.  .@;;;;#   `';;;;     +;;;@    #;;;#@@@@@@,    #;;;#   `#;;;@                                                       \n"
+//					   "                                                           @;;;;;     #;;;@    #;;;@    ,;;;;:    @;;;'           @;;;#    +;;;#                                                       \n"
+//					   "                                                           +;;;@      +;;;+    @;;;#    #;;;+     @;;;'           @;;;#    :;;;#                                                       \n"
+//					   "                                                          .;;;;:      `';;'    ;;;;'`   #;;;@     @;;;'           @;;;#    ';;;#                                                       \n"
+//					   "                                                          +;;;+        +;;;`   `';;;;  `';;;;     @;;;'           @;;;#    @;;;@                                                       \n"
+//					   "                                                          @;;;@        +;;;`    #;;;@  ';;;'      @;;;#;+#@@;     @;;;#   .';;;#                                                       \n"
+//					   "                                                          #;;;+        +;;;`    @;;;#  @;;;@      @;;;''';;;+`    @;;;#  .#;;;;,                                                       \n"
+//					   "                                                          +;;;,        +;;;`    ;;;;'  ';;;+      @;;;;;;;;;;'    @;;;#:##;;;;+                                                        \n"
+//					   "                                                          ';;;`        ';;;`    `';;;::;;;;`      @;;;;;;;;;;+    @;;;+';;;;;;@                                                        \n"
+//					   "                                                          ';;'        `';;'      #;;;##;;;#       @;;;;;;;;;;;    @;;;;;;;;;;+`                                                        \n"
+//					   "                                                          ';;'        :;;;+      @;;;##;;;@       @;;;;;;;;;#     @;;;;;;;;;'+                                                         \n"
+//					   "                                                          ';;'        #;;;#      ';;;'';;;:       @;;;#+##@@.     @;;;;;;;;;@                                                          \n"
+//					   "                                                          +;;;.       #;;;#      `';;;;;;'        @;;;'``         @;;;;;;;;;@                                                          \n"
+//					   "                                                          #;;;'      ,;;;;,       #;;;;;;#        @;;;'           @;;;'+';;;;;                                                         \n"
+//					   "                                                          @;;;@      @;;;+        @;;;;;;#        @;;;'           @;;;#,#;;;;#                                                         \n"
+//					   "                                                          +;;;':    :';;;@        ;;;;;;;:        @;;;'  `:#@,    @;;;#  #;;;;@                                                        \n"
+//					   "                                                          .;;;;#,  ,#;;;;,        `';;;;'         @;;;@@@#';;@    @;;;#  ';;;;':                                                       \n"
+//					   "                                                           #;;;;+@@+;;;;#          #;;;;#         @;;;;;;;;;;;,   @;;;#   @;;;;#                                                       \n"
+//					   "                                                           #;;;;;;;;;;;;'          @;;;;#         @;;;;;;;;;;;'   @;;;#   ,';;;;:                                                      \n"
+//					   "                                                           `+;;;;;;;;;;@           ';;;;:         @;;;;;;;;;;;:   #;;;#    @;;;;#                                                      \n"
+//					   "                                                            +;;;;;;;;;+.           `';;'`         ;;;;;;;;;;;#    #;;;'    `+;;;#                                                      \n"
+//					   "                                                             @';;;;;;+;             #;;@           @+';;;;'#@,    +;;'.     #;;;'                                                      \n"
+//					   "                                                              +#';;'#'              ;++;            .;###+:`      .+'#       @;#                                                       \n"
+//					   "                                                               `;##+`                ..                            .;        `+`                                                       \n"
+//					   "                                                                                                                                                                                       \n"
+//					   "                                                                                                                                                                                       \n"
+//					   "                                                                                                         "
+//					   "                                                                                               \n\n"
+//					   "                                                                                                                                                                                         ");
+//				refresh();
+//				exit(0);
+//			}
+//			printw("%s\n", buffer);
+
+//			bzero(buffer, sizeof(buffer));
+			while ((valread = read(sock, &key, 1)) > 0)
+			{
+				if (key == 'y')
+					break;
+			}
+			clear();
+			for (int k = 0; k < WIDTH; k++)
+				printw("-");
+			printw("\n");
+			key = 0;
+			usleep(1000);
+			bzero(buffer, sizeof(buffer));
+			if ((valread = read(sock, buffer, HEIGHT * (WIDTH + 1) + 1024)) <= 0)
+			{
+				clear();
+				::move(100, 100);
+				refresh();
+				printw("                                                                                                                                                                              \n"
+					   "                                                                                                                                                                                       \n"
+					   "                                                                                                                                                                                       \n"
+					   "                                                                                 `:                                                                                                    \n"
+					   "                                                               `+@@@'            @+@            .;           +,           `...,,,                                                      \n"
+					   "                                                              +#;;;;'@`         +;;;'          .#'#         @;+.       ;@@#+++++'@                                                     \n"
+					   "                                                            `@';;;;;;;@         #;;;#          #;;'`       .';;@      #';;;;;;;;;'.                                                    \n"
+					   "                                                           `#;;;;;;;;;'        `';;;;+         #;;;+       #;;;#     ,';;;;;;;;;;;+                                                    \n"
+					   "                                                           #;;;;;;;;;;;.       +;;;;;#         +;;;#       @;;;'     +;;;;;;;;;;;;+                                                    \n"
+					   "                                                          @;;;;;;;;;;;'`       @;;;;;;;        +;;;'`      +;;;;.    +;;;;;;;;;;;'.                                                    \n"
+					   "                                                         .';;;;;'@+@';@        ';;;;;;@        ';;;;#     .;;;;;'    .';;;'''++'+#                                                     \n"
+					   "                                                         @;;;;;@;   '#        :;;;;;;;'        ';;;;#     +;;;;;#     #;;;#;:,,:.                                                      \n"
+					   "                                                         +;;;;@               #;;;#;;;;;      `;;;;;'`    @;;;;;@     #;;;;                                                            \n"
+					   "                                                        ,;;;;@                #;;;#+;;;@      `;;;;;;+    +;;;;;+     #;;;;                                                            \n"
+					   "                                                        +;;;',               `';;;:#;;;+      .;;;;;;#   .;;;;;;'     #;;;;                                                            \n"
+					   "                                                        @;;;@   ```````      ;;;;' .;;;;,     :;;;;;;'`  +;;;;;;;.    #;;;; ``.:                                                       \n"
+					   "                                                        #;;;'  @#######+     #;;;#  +;;;#     ;;;;';;;'  @;;;#;;;:    #;;;@@##+'@                                                      \n"
+					   "                                                        +;;;. +;;;;;;;;+`    #;;;#  @;;;#     +;;;@;;;@  +;;;@;;;+    #;;;;;;;;;;.                                                     \n"
+					   "                                                        +;;;. @;;;;;;;;;'    ';;;@@@@;;;'@+   +;;;@;;;' `;;;'@;;;#    #;;;;;;;;;;'                                                     \n"
+					   "                                                        +;;;` #;;;;;;;;;+   ,;;;;;;;;;;;;;':  #;;;#';;;'+;;;#';;;@    #;;;;;;;;;;'                                                     \n"
+					   "                                                        +;;;. @;;;;;;;;;,   +;;;;;;;;;;;;;;@  #;;;+@;;;@@;;;@,;;;#    #;;;;;;;;;'`                                                     \n"
+					   "                                                        #;;;: .#;;;;;;;@    @;;;;;;;;;;;;;;#  @;;;+';;;'+;;;;`;;;+    #;;;;;;;'##                                                      \n"
+					   "                                                        @;;;#  .#@#@;;;#    #;;;;;;;;;;;;;;@  #;;;' ';;;;;;'` ';;'    #;;;@##+;`                                                       \n"
+					   "                                                        #;;;#      #;;;#    ';;;;;;;;;;;;;+,  #;;;: @;;;;;;+  +;;;`   #;;;;                                                            \n"
+					   "                                                        ,;;;;,     #;;;@   .;;;'@@@@@##;;;#   #;;;, ';;;;;;@  #;;;,   #;;;;                                                            \n"
+					   "                                                         ';;;@     #;;;@   ;;;;#      @;;;@   +;;;.  ';;;;;'  #;;;;   #;;;;    .,                                                      \n"
+					   "                                                         @;;;;@   `#;;;#   @;;;@      +;;;#   ';;;`  @;;;;;.  @;;;+   #;;;#''#@++#                                                     \n"
+					   "                                                         ;;;;;;@###;;;;#   @;;;#      :;;;+   ';;;`  ';;;;+   #;;;@   #;;;;'';;;;'`                                                    \n"
+					   "                                                          #;;;;;;;;;;;;'   #;;;;      `;;;'  `';;;`   ';;;@   +;;;@   #;;;;;;;;;;;:                                                    \n"
+					   "                                                          ';;;;;;;;;;;+`   ';;;.       ';;'  .;;;'    @;;;'   ';;;@   @;;;;;;;;;;;:                                                    \n"
+					   "                                                           @;;;;;;;;;;#    ';;'        +;;;` .;;;+    ;;;+    :;;;#   #;;;;;;;;;;'`                                                    \n"
+					   "                                                           `@;;;;;;;;@     #;;#        #;;+  `;;;#     @@'    `;;;@   `+;;;;;;;'+#                                                     \n"
+					   "                                                            `@';;;;+#      ''''        '';#   #;;+             #;',    ,@@@##@@+.                                                      \n"
+					   "                                                              ;@@@@:        +;          +#    ,@#              .@'                                                                     \n"
+					   "                                                                                                                      `:;,                                                             \n"
+					   "                                                                 :##'`                      `                       ,@#''+@'                                                           \n"
+					   "                                                               ,@';;'##        @##         ##@      `;#####@@;     #+;;;;;;'@                                                          \n"
+					   "                                                              ;+;;;;;;'@      #;;+        .';;,   .@#';;;;;;;+`   @;;;;;;;;;;#                                                         \n"
+					   "                                                             .+;;;;;;;;;@     #;;;;       @;;;#   #;;;;;;;;;;;'  .';;;;;;;;;;';                                                        \n"
+					   "                                                             @;;;;;;;;;;':    @;;;@       +;;;#  ;;;;;;;;;;;;;#  +;;;;;;;;;;;;#                                                        \n"
+					   "                                                            ';;;;;;;;;;;;@    #;;;#      :;;;;;  ';;;;;;;;;;;;'  #;;;;;++';;;;;.                                                       \n"
+					   "                                                            #;;;;#@@#;;;;'`   ;;;;'`     @;;;'   :;;;;;;;;;;;#`  ';;;;@,.;#;;;;#                                                       \n"
+					   "                                                           :;;;;#.  .@;;;;#   `';;;;     +;;;@    #;;;#@@@@@@,    #;;;#   `#;;;@                                                       \n"
+					   "                                                           @;;;;;     #;;;@    #;;;@    ,;;;;:    @;;;'           @;;;#    +;;;#                                                       \n"
+					   "                                                           +;;;@      +;;;+    @;;;#    #;;;+     @;;;'           @;;;#    :;;;#                                                       \n"
+					   "                                                          .;;;;:      `';;'    ;;;;'`   #;;;@     @;;;'           @;;;#    ';;;#                                                       \n"
+					   "                                                          +;;;+        +;;;`   `';;;;  `';;;;     @;;;'           @;;;#    @;;;@                                                       \n"
+					   "                                                          @;;;@        +;;;`    #;;;@  ';;;'      @;;;#;+#@@;     @;;;#   .';;;#                                                       \n"
+					   "                                                          #;;;+        +;;;`    @;;;#  @;;;@      @;;;''';;;+`    @;;;#  .#;;;;,                                                       \n"
+					   "                                                          +;;;,        +;;;`    ;;;;'  ';;;+      @;;;;;;;;;;'    @;;;#:##;;;;+                                                        \n"
+					   "                                                          ';;;`        ';;;`    `';;;::;;;;`      @;;;;;;;;;;+    @;;;+';;;;;;@                                                        \n"
+					   "                                                          ';;'        `';;'      #;;;##;;;#       @;;;;;;;;;;;    @;;;;;;;;;;+`                                                        \n"
+					   "                                                          ';;'        :;;;+      @;;;##;;;@       @;;;;;;;;;#     @;;;;;;;;;'+                                                         \n"
+					   "                                                          ';;'        #;;;#      ';;;'';;;:       @;;;#+##@@.     @;;;;;;;;;@                                                          \n"
+					   "                                                          +;;;.       #;;;#      `';;;;;;'        @;;;'``         @;;;;;;;;;@                                                          \n"
+					   "                                                          #;;;'      ,;;;;,       #;;;;;;#        @;;;'           @;;;'+';;;;;                                                         \n"
+					   "                                                          @;;;@      @;;;+        @;;;;;;#        @;;;'           @;;;#,#;;;;#                                                         \n"
+					   "                                                          +;;;':    :';;;@        ;;;;;;;:        @;;;'  `:#@,    @;;;#  #;;;;@                                                        \n"
+					   "                                                          .;;;;#,  ,#;;;;,        `';;;;'         @;;;@@@#';;@    @;;;#  ';;;;':                                                       \n"
+					   "                                                           #;;;;+@@+;;;;#          #;;;;#         @;;;;;;;;;;;,   @;;;#   @;;;;#                                                       \n"
+					   "                                                           #;;;;;;;;;;;;'          @;;;;#         @;;;;;;;;;;;'   @;;;#   ,';;;;:                                                      \n"
+					   "                                                           `+;;;;;;;;;;@           ';;;;:         @;;;;;;;;;;;:   #;;;#    @;;;;#                                                      \n"
+					   "                                                            +;;;;;;;;;+.           `';;'`         ;;;;;;;;;;;#    #;;;'    `+;;;#                                                      \n"
+					   "                                                             @';;;;;;+;             #;;@           @+';;;;'#@,    +;;'.     #;;;'                                                      \n"
+					   "                                                              +#';;'#'              ;++;            .;###+:`      .+'#       @;#                                                       \n"
+					   "                                                               `;##+`                ..                            .;        `+`                                                       \n"
+					   "                                                                                                                                                                                       \n"
+					   "                                                                                                                                                                                       \n"
+					   "                                                                                                         "
+					   "                                                                                               \n\n"
+					   "                                                                                                                                                                                         ");
+				refresh();
+				exit(0);
+			}
+			printw("%s\n", buffer);
+			for (int k = 0; k < WIDTH; k++)
+				printw("-");
+			printw("\n");
+//			bzero(buffer, sizeof(buffer));
+//			read(sock, buffer, sizeof(buffer));
+//			tp = std::chrono::system_clock::now();
+//			start_program = tp.time_since_epoch();
+//			printw("|||ANTON = %lld||||\n", strtoll(buffer, nullptr, 10));
+//			printw("DENIS = %lld\n", start_program.count());
+//			printw("RAZNICA = %lld", start_program.count() - strtoll(buffer, nullptr, 10));
+//			printw("\n");
+			refresh();
+		}
+	}
+
+
+
+
+
+
+
+
+
+	if (serverORclient == 0)
+	{
+		echo();
+		clear();
+		bzero(name, sizeof(name));
+		printw("Enter your name : ");
+		scanw("%s\n", name);
+		refresh();
+		game.getPlayers()[0].setName(name);
+		noecho();
+		std::thread tKeyInput(getch_ret, std::ref(getch_ref), std::ref(mut_flag)); //thread for read from keyboard
+		std::thread tPlayer1Action(player1Action, std::ref(getch_ref), std::ref(game),
+								   std::ref(tKeyInput), std::ref(mut_flag));
+		std::time(&sTime);
+		while (true)
+		{
+			while (mut_flag);
+			if (j % 18 == 0)
+				standardUnitGeneration(game);
+			score_calc(game);
+			setEntitiesOnPrintField(game);
+			printField(game, sTime);
+			game.clsField();
+			game.clsGameEntities();
+			usleep(100000);
+			standardUnitActions(j, game);
+			delete_and_move_death_bullets(game);
+			j++;
+		}
 	}
 }
