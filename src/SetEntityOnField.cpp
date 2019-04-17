@@ -34,6 +34,9 @@ void	setPlayersOnField(Game &game)
 					gameEntity = game.getGameEntitys(tmp_loc.y + i, tmp_loc.x + j);
 					if (gameEntity != NULL && checkPlayersCollision(game, gameEntity))
 					{
+//						file << tmp_loc.y << " "<< tmp_loc.x << "collision obj" << std::endl;
+//						print_bull_coords(game.getBullets());
+//						file << "---------------------------------------";
 						checkCollision(gameEntity, (GameEntity *) &game.getPlayers()[k], game);
 					}
 					else
@@ -83,19 +86,24 @@ void	setBulletsOnField(Game &game)
 	{
 		tmp_loc = bullet->bullet->get_location();
 		if (tmp_loc.y < 0 || tmp_loc.y >= HEIGHT ||
-			tmp_loc.x < 0 || tmp_loc.x >= WIDTH || bullet->bullet->get_location().x == -1)
+			tmp_loc.x < 0 || tmp_loc.x >= WIDTH || bullet->bullet->get_location().x == -1 || bullet->bullet->get_damage() == 0)
 		{
 			bullet = bullet->next;
 			continue;
 		}
-		if (game.getGameEntitys(tmp_loc.y , tmp_loc.x) != NULL &&
+		if (tmp_loc.x != -1 && game.getGameEntitys(tmp_loc.y , tmp_loc.x) != NULL &&
 			game.getGameEntitys(tmp_loc.y, tmp_loc.x) !=
 			(GameEntity *)bullet->bullet)
 		{
+//			std::cout << tmp_loc.y << " "<< tmp_loc.x << "collision obj" <<
+//			" y: " << game.getGameEntitys(tmp_loc.y, tmp_loc.x)->get_location().y <<
+//			" x: " << game.getGameEntitys(tmp_loc.y, tmp_loc.x)->get_location().x<< std::endl;
+////			print_bull_coords(game.getBullets());
+//			std::cout << "---------------------------------------\n";
+//			exit(1);
 			checkCollision(game.getGameEntitys(tmp_loc.y, tmp_loc.x),
 						   (GameEntity *) bullet->bullet, game);
 			bullet->bullet->set_damage(0);
-
 		}
 		if (tmp_loc.y > 0 && tmp_loc.y < HEIGHT &&
 				tmp_loc.x > 0 && tmp_loc.x < WIDTH)
@@ -123,15 +131,21 @@ void	setEntitiesOnPrintField(Game &game)
 	t_location tmp_loc;
 	t_bullet	*bullet;
 
-	tmp_loc = game.getPlayers()[0].getLocation();
 	bullet = game.getBullets();
-	for (int i = 0; i  < HEIGHT_PLAYER_1; i++)
+
+	for (int k = 0; k < NUMBEROFPLAYERS; k++)
 	{
-		for (int j = 0; j < WIDTH_PLAYER_1 - 1; j++)
+		if (game.getPlayers()[k].get_location().x < 0)
+			continue;
+		tmp_loc = game.getPlayers()[k].getLocation();
+		for (int i = 0; i < HEIGHT_PLAYER_1; i++)
 		{
-			if (game.getPlayers()[0]._avatar[i][j] != ' ')
-				game.setFieldElem(tmp_loc.y + i, tmp_loc.x + j,
-								  game.getPlayers()[0]._avatar[i][j]);
+			for (int j = 0; j < WIDTH_PLAYER_1 - 1; j++)
+			{
+				if (game.getPlayers()[k]._avatar[i][j] != ' ')
+					game.setFieldElem(tmp_loc.y + i, tmp_loc.x + j,
+									  game.getPlayers()[k]._avatar[i][j]);
+			}
 		}
 	}
 	for (int i = 0; i < STANDART_UNITS_NUMBER; i++)

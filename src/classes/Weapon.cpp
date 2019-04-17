@@ -16,7 +16,6 @@ Weapon::Weapon()
 
 t_bullet *Weapon::shot(t_bullet *bullets_list, int degrees)
 {
-
 	bullets_list = push_bullet_front(bullets_list, new Bullet(_bullet));
 	bullets_list->bullet->set_location(this->_location);
 	bullets_list->bullet->setDegrees(degrees);

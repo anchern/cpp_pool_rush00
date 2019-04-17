@@ -25,11 +25,13 @@ void	checkCollision(GameEntity *GE1, GameEntity *GE2, Game &game)
 	{
 		((Character *)GE2)->takeDamage(*((Bullet *)GE1));
 		((Bullet *)GE1)->death();
+		((Bullet *)GE1)->set_damage(0);
 	}
 	if (damageGE1 < 0 && damageGE2 >= 0)
 	{
 		((Character *)GE1)->takeDamage(*((Bullet *)GE2));
 		((Bullet *)GE2)->death();
+		((Bullet *)GE2)->set_damage(0);
 	}
 	if (damageGE1 < 0 && damageGE2 < 0)
 	{

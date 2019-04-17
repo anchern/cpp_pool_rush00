@@ -47,3 +47,8 @@ void GameEntity::set_damage(int _damage)
 {
 	GameEntity::_damage = _damage;
 }
+
+void GameEntity::set_location(const t_location &_location)
+{
+	GameEntity::_location = _location;
+}

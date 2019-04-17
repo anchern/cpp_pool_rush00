@@ -148,18 +148,18 @@ CMakeFiles/rush00.dir/src/classes/Game.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rush00.dir/src/classes/Game.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/achernys/cpp_pool_rush00/src/classes/Game.cpp -o CMakeFiles/rush00.dir/src/classes/Game.cpp.s
 
-CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.o: CMakeFiles/rush00.dir/flags.make
-CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.o: ../src/classes/StandartUnit.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.o -c /Users/achernys/cpp_pool_rush00/src/classes/StandartUnit.cpp
+CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.o: CMakeFiles/rush00.dir/flags.make
+CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.o: ../src/classes/StandardUnit.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.o -c /Users/achernys/cpp_pool_rush00/src/classes/StandardUnit.cpp
 
-CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/achernys/cpp_pool_rush00/src/classes/StandartUnit.cpp > CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.i
+CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/achernys/cpp_pool_rush00/src/classes/StandardUnit.cpp > CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.i
 
-CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/achernys/cpp_pool_rush00/src/classes/StandartUnit.cpp -o CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.s
+CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/achernys/cpp_pool_rush00/src/classes/StandardUnit.cpp -o CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.s
 
 CMakeFiles/rush00.dir/src/CreateNewBullet.cpp.o: CMakeFiles/rush00.dir/flags.make
 CMakeFiles/rush00.dir/src/CreateNewBullet.cpp.o: ../src/CreateNewBullet.cpp
@@ -226,6 +226,71 @@ CMakeFiles/rush00.dir/src/SetEntityOnField.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rush00.dir/src/SetEntityOnField.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/achernys/cpp_pool_rush00/src/SetEntityOnField.cpp -o CMakeFiles/rush00.dir/src/SetEntityOnField.cpp.s
 
+CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.o: CMakeFiles/rush00.dir/flags.make
+CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.o: ../src/StandardUnitGeneration.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.o -c /Users/achernys/cpp_pool_rush00/src/StandardUnitGeneration.cpp
+
+CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/achernys/cpp_pool_rush00/src/StandardUnitGeneration.cpp > CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.i
+
+CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/achernys/cpp_pool_rush00/src/StandardUnitGeneration.cpp -o CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.s
+
+CMakeFiles/rush00.dir/src/moveGameEntities.cpp.o: CMakeFiles/rush00.dir/flags.make
+CMakeFiles/rush00.dir/src/moveGameEntities.cpp.o: ../src/moveGameEntities.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/rush00.dir/src/moveGameEntities.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rush00.dir/src/moveGameEntities.cpp.o -c /Users/achernys/cpp_pool_rush00/src/moveGameEntities.cpp
+
+CMakeFiles/rush00.dir/src/moveGameEntities.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rush00.dir/src/moveGameEntities.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/achernys/cpp_pool_rush00/src/moveGameEntities.cpp > CMakeFiles/rush00.dir/src/moveGameEntities.cpp.i
+
+CMakeFiles/rush00.dir/src/moveGameEntities.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rush00.dir/src/moveGameEntities.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/achernys/cpp_pool_rush00/src/moveGameEntities.cpp -o CMakeFiles/rush00.dir/src/moveGameEntities.cpp.s
+
+CMakeFiles/rush00.dir/src/checkCollision.cpp.o: CMakeFiles/rush00.dir/flags.make
+CMakeFiles/rush00.dir/src/checkCollision.cpp.o: ../src/checkCollision.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/rush00.dir/src/checkCollision.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rush00.dir/src/checkCollision.cpp.o -c /Users/achernys/cpp_pool_rush00/src/checkCollision.cpp
+
+CMakeFiles/rush00.dir/src/checkCollision.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rush00.dir/src/checkCollision.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/achernys/cpp_pool_rush00/src/checkCollision.cpp > CMakeFiles/rush00.dir/src/checkCollision.cpp.i
+
+CMakeFiles/rush00.dir/src/checkCollision.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rush00.dir/src/checkCollision.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/achernys/cpp_pool_rush00/src/checkCollision.cpp -o CMakeFiles/rush00.dir/src/checkCollision.cpp.s
+
+CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.o: CMakeFiles/rush00.dir/flags.make
+CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.o: ../src/deleteDeathEntities.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.o -c /Users/achernys/cpp_pool_rush00/src/deleteDeathEntities.cpp
+
+CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/achernys/cpp_pool_rush00/src/deleteDeathEntities.cpp > CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.i
+
+CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/achernys/cpp_pool_rush00/src/deleteDeathEntities.cpp -o CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.s
+
+CMakeFiles/rush00.dir/src/menu.cpp.o: CMakeFiles/rush00.dir/flags.make
+CMakeFiles/rush00.dir/src/menu.cpp.o: ../src/menu.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/rush00.dir/src/menu.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rush00.dir/src/menu.cpp.o -c /Users/achernys/cpp_pool_rush00/src/menu.cpp
+
+CMakeFiles/rush00.dir/src/menu.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rush00.dir/src/menu.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/achernys/cpp_pool_rush00/src/menu.cpp > CMakeFiles/rush00.dir/src/menu.cpp.i
+
+CMakeFiles/rush00.dir/src/menu.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rush00.dir/src/menu.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/achernys/cpp_pool_rush00/src/menu.cpp -o CMakeFiles/rush00.dir/src/menu.cpp.s
+
 # Object files for target rush00
 rush00_OBJECTS = \
 "CMakeFiles/rush00.dir/src/classes/Bullet.cpp.o" \
@@ -235,12 +300,17 @@ rush00_OBJECTS = \
 "CMakeFiles/rush00.dir/src/classes/Weapon.cpp.o" \
 "CMakeFiles/rush00.dir/src/classes/Enemy.cpp.o" \
 "CMakeFiles/rush00.dir/src/classes/Game.cpp.o" \
-"CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.o" \
+"CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.o" \
 "CMakeFiles/rush00.dir/src/CreateNewBullet.cpp.o" \
 "CMakeFiles/rush00.dir/src/DeleteBullets.cpp.o" \
 "CMakeFiles/rush00.dir/src/main.cpp.o" \
 "CMakeFiles/rush00.dir/src/CreateGame.cpp.o" \
-"CMakeFiles/rush00.dir/src/SetEntityOnField.cpp.o"
+"CMakeFiles/rush00.dir/src/SetEntityOnField.cpp.o" \
+"CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.o" \
+"CMakeFiles/rush00.dir/src/moveGameEntities.cpp.o" \
+"CMakeFiles/rush00.dir/src/checkCollision.cpp.o" \
+"CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.o" \
+"CMakeFiles/rush00.dir/src/menu.cpp.o"
 
 # External object files for target rush00
 rush00_EXTERNAL_OBJECTS =
@@ -252,15 +322,20 @@ rush00: CMakeFiles/rush00.dir/src/classes/Player.cpp.o
 rush00: CMakeFiles/rush00.dir/src/classes/Weapon.cpp.o
 rush00: CMakeFiles/rush00.dir/src/classes/Enemy.cpp.o
 rush00: CMakeFiles/rush00.dir/src/classes/Game.cpp.o
-rush00: CMakeFiles/rush00.dir/src/classes/StandartUnit.cpp.o
+rush00: CMakeFiles/rush00.dir/src/classes/StandardUnit.cpp.o
 rush00: CMakeFiles/rush00.dir/src/CreateNewBullet.cpp.o
 rush00: CMakeFiles/rush00.dir/src/DeleteBullets.cpp.o
 rush00: CMakeFiles/rush00.dir/src/main.cpp.o
 rush00: CMakeFiles/rush00.dir/src/CreateGame.cpp.o
 rush00: CMakeFiles/rush00.dir/src/SetEntityOnField.cpp.o
+rush00: CMakeFiles/rush00.dir/src/StandardUnitGeneration.cpp.o
+rush00: CMakeFiles/rush00.dir/src/moveGameEntities.cpp.o
+rush00: CMakeFiles/rush00.dir/src/checkCollision.cpp.o
+rush00: CMakeFiles/rush00.dir/src/deleteDeathEntities.cpp.o
+rush00: CMakeFiles/rush00.dir/src/menu.cpp.o
 rush00: CMakeFiles/rush00.dir/build.make
 rush00: CMakeFiles/rush00.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable rush00"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/achernys/cpp_pool_rush00/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable rush00"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rush00.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

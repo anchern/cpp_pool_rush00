@@ -1,22 +1,23 @@
 #include "classes/Game.hpp"
-#include <iostream>
-#include "ncurses.h"
-#include <unistd.h>
-#include <thread>
+#include <stdlib.h>
+#include <sstream>
 
 #define MENU_ITEM 3
 #define PAUSE_ITEM 2
 
-std::mutex mutex;
+#define PORT 4242
 
-int 	menu(std::string *menu_items, int size);
+//FILE *file = std::fopen("/Users/achernys/cpp_pool_rush00/logs", "rwa");
 
 void print_bull_coords(t_bullet *bullets)
 {
 	if (bullets == 0)
+	{
+		file << "NULL\n";
 		return;
-	std::cout << "x: " << bullets->bullet->get_location().x << " | y: " <<
-	bullets->bullet->get_location().y << std::endl;
+	}
+	file << "x: " << bullets->bullet->get_location().x << "| y: " <<
+						bullets->bullet->get_location().y << std::endl;
 	print_bull_coords(bullets->next);
 }
 
@@ -29,12 +30,12 @@ void	getch_ret(int &getch_ref, bool &mut_flag)
 		getch_ref = getch();
 		if (getch_ref == 27)
 			mut_flag = true;
-		usleep(500);
+
 	}
 }
 
 
-void	delete_and_move_death_bullets(Game &game)
+void	delete_and_move_bullets(Game &game, bool &mute_flag)
 {
 	t_bullet *bulletTmp;
 	t_bullet *bulletTmp1;
@@ -96,7 +97,7 @@ void	player1Action(int &getch_ref, Game &game, std::thread &thr1, bool &mut_flag
 				game.getPlayers()[0].set_degrees(90);
 				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
 				{
-					movePlayer(game);
+					game.getPlayers()[0].move(game.getPlayers()[0].get_degrees());
 					setPlayersOnField(game);
 				}
 				break;
@@ -104,7 +105,7 @@ void	player1Action(int &getch_ref, Game &game, std::thread &thr1, bool &mut_flag
 				game.getPlayers()[0].set_degrees(270);
 				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
 				{
-					movePlayer(game);
+					game.getPlayers()[0].move(game.getPlayers()[0].get_degrees());
 					setPlayersOnField(game);
 				}
 				break;
@@ -112,7 +113,7 @@ void	player1Action(int &getch_ref, Game &game, std::thread &thr1, bool &mut_flag
 				game.getPlayers()[0].set_degrees(180);
 				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
 				{
-					movePlayer(game);
+					game.getPlayers()[0].move(game.getPlayers()[0].get_degrees());
 					setPlayersOnField(game);
 				}
 				break;
@@ -120,7 +121,7 @@ void	player1Action(int &getch_ref, Game &game, std::thread &thr1, bool &mut_flag
 				game.getPlayers()[0].set_degrees(0);
 				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
 				{
-					movePlayer(game);
+					game.getPlayers()[0].move(game.getPlayers()[0].get_degrees());
 					setPlayersOnField(game);
 				}
 				break;
@@ -132,10 +133,88 @@ void	player1Action(int &getch_ref, Game &game, std::thread &thr1, bool &mut_flag
 				game.getPlayers()[0].set_degrees(saveDegrees);
 				break;
 			default:
-				setPlayersOnField(game);
+				break;
 		}
 		getch_ref = 0;
-		usleep(500);
+		usleep(70000);
+	}
+}
+
+void	player2Action(std::function<int(std::string *menu_items, int size,
+		int &client_getch_ref, int socket)> &menu,int &client_getch_ref,
+				Game &game, std::thread &thr1, bool &mut_flag, int socket)
+{
+	int saveDegrees;
+	std::string pause_items[PAUSE_ITEM] = {	"RESUME GAME",
+											   "EXIT"};
+
+	while (true)
+	{
+		switch (client_getch_ref)
+		{
+			case 27:
+				switch (menu(pause_items, PAUSE_ITEM, client_getch_ref, socket))
+				{
+					case 1:
+						break;
+					case 2:
+						clear();
+						printw("BYE!");
+						refresh();
+						usleep(100000);
+						endwin();
+						thr1.detach();
+						exit(0);
+					default:
+						break;
+				}
+				mut_flag = false;
+				break;
+			case KEY_UP:
+				game.getPlayers()[1].set_degrees(90);
+				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
+				{
+					game.getPlayers()[1].move(game.getPlayers()[1].get_degrees());
+					setPlayersOnField(game);
+				}
+				break;
+			case KEY_DOWN:
+				game.getPlayers()[1].set_degrees(270);
+				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
+				{
+					game.getPlayers()[1].move(game.getPlayers()[1].get_degrees());
+					setPlayersOnField(game);
+				}
+				break;
+			case KEY_RIGHT:
+				game.getPlayers()[1].set_degrees(180);
+				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
+				{
+					game.getPlayers()[1].move(game.getPlayers()[1].get_degrees());
+					setPlayersOnField(game);
+				}
+				break;
+			case KEY_LEFT:
+				game.getPlayers()[1].set_degrees(0);
+				for (int i = 0; i < game.getPlayers()->get_speed(); i++)
+				{
+					game.getPlayers()[1].move(game.getPlayers()[1].get_degrees());
+					setPlayersOnField(game);
+				}
+				break;
+			case ' ':
+				setPlayersOnField(game);
+				saveDegrees = game.getPlayers()[1].get_degrees();
+				game.getPlayers()[1].set_degrees(90);
+				game.setBullets(game.getPlayers()[1].shot(game.getBullets()));
+				game.getPlayers()[1].set_degrees(saveDegrees);
+				break;
+			default:
+				setPlayersOnField(game);
+		}
+		client_getch_ref = 0;
+		usleep(70000);
+
 	}
 }
 
@@ -163,18 +242,47 @@ void score_calc(Game &game)
 		game.setScore(number_of_units - number_of_units_tmp);
 }
 
-void	printField(Game &game, time_t sTime)
+void sendData(int socket, Game &game, time_t sTime, time_t mTime)
+{
+	char *oneLineField;
+	char header[1024];
+	char *outData;
+
+
+	sprintf(header, "%s | HP: %d | %s | HP: %d |\nTime: %.2ld:%.2ld | Score: %u\n",
+			game.getPlayers()[0].get_name().c_str(),game.getPlayers()[0].get_hp(),
+			game.getPlayers()[1].get_name().c_str(),game.getPlayers()[1].get_hp(),
+			mTime, sTime, game.getScore());
+	oneLineField = game.getOneLineField();
+	outData = new char [strlen(oneLineField) + sizeof(header)];
+	strcpy(outData, header);
+	strcat(outData, oneLineField);
+	send(socket, "y", 1, 0);
+	send(socket, outData, strlen(outData) + 1, 0);
+	delete [] oneLineField;
+	delete [] outData;
+}
+
+void	printField(Game &game, time_t sTime, int socket)
 {
 	time_t time;
+	time_t sCurTime;
+	time_t mCurTime;
 
 	std::time(&time);
+	sCurTime = (time - sTime) % 60;
+	mCurTime = (time - sTime) / 60;
+	sendData(socket, game, sCurTime, mCurTime);
 	clear();
-	printw("Player: %s | HP: %d | Time: %.2d:%.2d | Score: %u\n",game.getPlayers()[0].get_name().c_str(),
-		   game.getPlayers()[0].get_hp(), (time - sTime) /60,(time - sTime) % 60, game.getScore());
+	printw("%s | HP: %d | %s | HP: %d |\nTime: %.2ld:%.2ld | Score: %u\n",
+			game.getPlayers()[0].get_name().c_str(),game.getPlayers()[0].get_hp(),
+			game.getPlayers()[1].get_name().c_str(),game.getPlayers()[1].get_hp(),
+			mCurTime,sCurTime, game.getScore());
 	for (int k = 0; k < WIDTH; k++)
 		printw("-");
 	printw("\n");
 	game.printField();
+//	printw("%s\n", game.getOneLineField());
 	for (int k = 0; k < WIDTH; k++)
 		printw("-");
 	printw("\n");
@@ -199,72 +307,119 @@ void	standardUnitActions(int j, Game &game)
 	}
 }
 
-int 	menu(std::string *menu_items, int size)
-{
-	int			menu_i = 1;
-	bool		menu_lable = false;
 
+
+struct sockaddr_in	create_server(int *server_fd)
+{
+	int valread;
+	struct sockaddr_in address;
+	int opt = 1;
+	int addrlen = sizeof(address);
+	char buffer[1024] = {0};
+	std::string hello = "";
+
+	// Creating socket file descriptor
+	if ((*server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
+	{
+		perror("socket failed");
+		exit(EXIT_FAILURE);
+	}
+
+	// Forcefully attaching socket to the port 8080
+	if (setsockopt(*server_fd, SOL_SOCKET,  SO_REUSEPORT,
+				   &opt, sizeof(opt)))
+	{
+		perror("setsockopt");
+		exit(EXIT_FAILURE);
+	}
+	address.sin_family = AF_INET;
+	address.sin_addr.s_addr = INADDR_ANY;
+	address.sin_port = htons( PORT );
+
+	// Forcefully attaching socket to the port 8080
+	if (bind(*server_fd, (struct sockaddr *)&address,
+			 sizeof(address)) < 0)
+	{
+		perror("bind failed");
+		exit(EXIT_FAILURE);
+	}
+	if (listen(*server_fd, 3) < 0)
+	{
+		perror("listen");
+		exit(EXIT_FAILURE);
+	}
+
+
+	return (address);
+}
+
+int new_socket(int server_fd, struct sockaddr_in &address)
+{
+	int  new_socket;
+	int addrlen = sizeof(address);
+
+	clear();
+	printw("Wait to connect...\n");
+	refresh();
+	if ((new_socket = accept(server_fd, (struct sockaddr *)&address,
+							 (socklen_t*)&addrlen))<0)
+	{
+		perror("accept");
+		exit(EXIT_FAILURE);
+	}
+	clear();
+	printw("Socket %d connected.\n", new_socket);
+	refresh();
+	return (new_socket);
+}
+
+void takeClientMove(int &client_getch_ref, int socket, bool &mut_flag)
+{
 	while (true)
 	{
-		clear();
-		for (int i = 0; i < size; i++)
-		{
-			if (menu_i == i + 1)
-				printw("-> %s\n", menu_items[i].c_str());
-			else
-				printw("   %s\n", menu_items[i].c_str());
-		}
-		refresh();
-		switch (getch())
-		{
-			case KEY_UP:
-				menu_i--;
-				break;
-			case KEY_DOWN:
-				menu_i++;
-				break ;
-			case '\n':
-				menu_lable = true;
-				break;
-			default:
-				break;
-		}
-		if (menu_i == size + 1)
-			menu_i = 1;
-		else if (menu_i == 0)
-			menu_i = size;
-		if (menu_lable)
-			break ;
+		read(socket, &client_getch_ref, 4);
+		if (client_getch_ref == 27)
+			mut_flag = true;
+
 	}
-	return (menu_i);
 }
 
 int main()
 {
 
-	int			j = 0;
-	time_t		sTime;
-	int			getch_ref;
-	Game		&game = Game::instance();
-	bool		mut_flag = false;
-	std::string menu_items[MENU_ITEM] = {	"SINGLE PLAYER",
-									   		"MULTI PLAYER",
-											 "EXIT"};
+	int j = 0;
+	time_t sTime;
+	int getch_ref;
+	int client_getch_ref;
+	Game &game = Game::instance();
+	bool mut_flag = false;
+	std::string menu_items[MENU_ITEM] = {"SINGLE PLAYER",
+										 "MULTI PLAYER",
+										 "EXIT"};
+//	long long jjjjj;
+	std::string my_name;
+	int socket = 0;
+	struct sockaddr_in address;
+	int server_fd = 0;
 
-
+	file.open("/Users/achernys/cpp_pool_rush00/logs", std::ios::out | std::ios::app);
 	setlocale(LC_ALL, "");
 	initscr();
 	noecho();
 	keypad(stdscr, TRUE);
-	initGame(game, "Player1");
-	std::time(&sTime);
+	initMultiGame(game, "Player1", "Player2");
 
-
+//	std::thread tMusic([](){
+//		while (true)
+//			system("afplay Sound1.mp3");
+//	});
 	switch (menu(menu_items, MENU_ITEM))
 	{
 		case 1:
 			break;
 		case 2:
+			address = create_server(&server_fd);
+			socket = new_socket(server_fd, address);
 			break;
 		case 3:
 			printw("Bye!\n");
@@ -272,26 +427,66 @@ int main()
 		default:
 			break;
 	}
+//	if (socket != 0)
+//	{
+//		char mess[] = "Bye!";
+//		send(socket, mess, 5, 0);
+//		printw("Socket %d kicked\n", socket);
+//		close(socket);
+//		getch();
+//		socket = new_socket(server_fd, address);
+//
+//		exit(1);
+//	}
+//	std::chrono::system_clock::time_point tp;
+//	std::chrono::system_clock::duration start_program;
+	std::function<int(std::string *menu_items, int size, int &client_getch_ref,
+					  int socket)> menu_func = client_pause_menu;
+	std::thread tKeyInput(getch_ret, std::ref(getch_ref),
+						  std::ref(mut_flag)); //thread for read from keyboard
+	std::thread tPlayer1Action(player1Action, std::ref(getch_ref),
+							   std::ref(game),
+							   std::ref(tKeyInput), std::ref(mut_flag));
+	std::thread tClientMove(takeClientMove, std::ref(client_getch_ref), socket,
+							std::ref(mut_flag));
+	std::thread tPlayer2Action(player2Action, std::ref(menu_func),
+							   std::ref(client_getch_ref), std::ref(game),
+							   std::ref(tClientMove), std::ref(mut_flag),
+							   socket);
 
-	std::thread	tKeyInput(getch_ret, std::ref(getch_ref), std::ref(mut_flag)); //thread for read from keyboard
-	std::thread tPlayer1Action(player1Action, std::ref(getch_ref), std::ref(game),
-			std::ref(tKeyInput), std::ref(mut_flag));
-
-
+	std::time(&sTime);
+//	std::string kkkk;
 	while (true)
 	{
 		while (mut_flag)
 			;
+		if (game.getPlayers()[0].get_hp() == 0 || game.getPlayers()[1].get_hp() == 0)
+		{
+			tKeyInput.detach();
+			tPlayer1Action.detach();
+			tPlayer2Action.detach();
+			tClientMove.detach();
+			return (0);
+		}
 		if (j % 18 == 0)
 			standardUnitGeneration(game);
+		mut_flag = true;
 		score_calc(game);
 		setEntitiesOnPrintField(game);
-		printField(game, sTime);
+		printField(game, sTime, socket);
 		game.clsField();
 		game.clsGameEntities();
-		usleep(100000);
+//		tp = std::chrono::system_clock::now();
+//		start_program = tp.time_since_epoch();
+//		jjjjj = start_program.count();
+//		kkkk = std::to_string(jjjjj);
+//		refresh();
+//		send(socket, kkkk.c_str(), kkkk.length(), 0);
+
 		standardUnitActions(j, game);
-		delete_and_move_death_bullets(game);
+		delete_and_move_bullets(game, mut_flag);
+		mut_flag = false;
+		usleep(70000);
 		j++;
 	}
 }

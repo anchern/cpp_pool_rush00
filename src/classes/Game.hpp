@@ -14,9 +14,10 @@
 
 
 
-#define NUMBEROFPLAYERS 1
+#define NUMBEROFPLAYERS 2
 #define STANDART_UNITS_NUMBER 50
 
+static std::ofstream file;
 
 class Game
 {
@@ -33,6 +34,7 @@ public:
 	void	clsField();
 	void	clsGameEntities();
 	void	printField();
+	char	*getOneLineField();
 
 
 

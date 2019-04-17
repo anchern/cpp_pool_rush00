@@ -14,7 +14,7 @@ Player::Player(const std::string &name) : _name(name)
 
 Player::Player()
 {
-	_location.x = WIDTH / 2 - WIDTH_PLAYER_1 / 2;
+	_location.x = 0;
 	_location.y = HEIGHT  -  (HEIGHT_PLAYER_1 + 1);
 	_maxHp = 5;
 	_hp = _maxHp;
@@ -116,8 +116,7 @@ void Player::death()
 	 "                                                                                               \n\n"
 		   "                                                                                                                                                                                         ");
 	refresh();
-	usleep(1000000);
-	exit(0);
+	set_hp(0);
 }
 
 t_bullet *Player::shot(t_bullet *bullets_list)
@@ -180,4 +179,10 @@ void Player::move(int degrees)
 	tmp_loc = _location;
 	tmp_loc.x = _location.x + ((WIDTH_PLAYER_1 - 1) / 2);
 	_weapon[0].set_location(tmp_loc);
+}
+
+void Player::set_avatar(std::string *avatar)
+{
+	for (int i = 0; i < HEIGHT_PLAYER_1; i++)
+		strncpy(_avatar[i], avatar[i].c_str(), WIDTH_PLAYER_1 - 1);
 }

@@ -37,6 +37,7 @@ public:
 
 	t_location getLocation();
 	void move(int degrees);
+	void set_avatar(std::string *avatar);
 
 private:
 	std::string	_name;

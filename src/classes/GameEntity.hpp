@@ -30,6 +30,8 @@ public:
 
 	void set_damage(int _damage);
 
+	void set_location(const t_location &_location);
+
 protected:
 	t_location	_location;
 	int			_damage = 0;

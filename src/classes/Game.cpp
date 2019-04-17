@@ -1,3 +1,4 @@
+#include <sstream>
 #include "Game.hpp"
 #include "ncurses.h"
 
@@ -89,5 +90,24 @@ void Game::setScore(unsigned int score)
 unsigned int Game::getScore() const
 {
 	return score;
+}
+
+char *Game::getOneLineField()
+{
+	char *oneLineField = new char[HEIGHT * (WIDTH + 1)];
+	int k = 0;
+
+	for (int i = 0;  i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			oneLineField[k] = field[i][j];
+			k++;
+		}
+		oneLineField[k] = '\n';
+		k++;
+	}
+	oneLineField[k - 1] = 0;
+	return oneLineField;
 }
 

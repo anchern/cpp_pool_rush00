@@ -101,6 +101,12 @@
 		<Unit filename="/Users/achernys/cpp_pool_rush00/src/SetEntityOnField.cpp">
 			<Option target="rush00"/>
 		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/StandardUnitGeneration.cpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/checkCollision.cpp">
+			<Option target="rush00"/>
+		</Unit>
 		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Bullet.cpp">
 			<Option target="rush00"/>
 		</Unit>
@@ -137,10 +143,10 @@
 		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Player.hpp">
 			<Option target="rush00"/>
 		</Unit>
-		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/StandartUnit.cpp">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/StandardUnit.cpp">
 			<Option target="rush00"/>
 		</Unit>
-		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/StandartUnit.hpp">
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/StandardUnit.hpp">
 			<Option target="rush00"/>
 		</Unit>
 		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Weapon.cpp">
@@ -149,7 +155,16 @@
 		<Unit filename="/Users/achernys/cpp_pool_rush00/src/classes/Weapon.hpp">
 			<Option target="rush00"/>
 		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/deleteDeathEntities.cpp">
+			<Option target="rush00"/>
+		</Unit>
 		<Unit filename="/Users/achernys/cpp_pool_rush00/src/main.cpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/menu.cpp">
+			<Option target="rush00"/>
+		</Unit>
+		<Unit filename="/Users/achernys/cpp_pool_rush00/src/moveGameEntities.cpp">
 			<Option target="rush00"/>
 		</Unit>
 		<Unit filename="/Users/achernys/cpp_pool_rush00/CMakeLists.txt">
