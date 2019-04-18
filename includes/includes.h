@@ -14,19 +14,16 @@
 #include <unistd.h>
 #include <thread>
 #include <stdio.h>
-#include <sys/socket.h>
 #include <stdlib.h>
-#include <netinet/in.h>
-#include <chrono>
 
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
+#include "ClientServer.hpp"
 
 #define HEIGHT	60
 #define WIDTH	120
 #define MULTIPLAYERMENU_ITEM 2
-#define PORT 4242
 
 class Bullet;
 class Game;
@@ -64,8 +61,9 @@ void		setBulletsOnField(Game &game);
 int 		menu(std::string *menu_items, int size);
 int 		client_pause_menu(std::string *menu_items, int size,
 								int &client_getch_ref, int socket);
-struct sockaddr_in	create_server(int *server_fd);
-int 		new_socket(int server_fd, struct sockaddr_in &address);
+struct sockaddr_in	create_server(int &server_fd);
+int 		get_new_connect_socket(int server_fd, struct sockaddr_in &address);
+void		print_game_over();
 
 
 

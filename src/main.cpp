@@ -283,7 +283,9 @@ void sendData(int socket, Game &game, time_t sTime, time_t mTime)
 	strcpy(outData, header);
 	strcat(outData, oneLineField);
 	send(socket, "y", 1, 0);
-	send(socket, outData, strlen(outData) + 1, 0);
+	send(socket, header, 1024, 0);
+	send(socket, oneLineField, strlen(oneLineField) + 1, 0);
+//	send(socket, outData, strlen(outData) + 1, 0);
 	delete [] oneLineField;
 	delete [] outData;
 }
@@ -343,7 +345,6 @@ void	readFromServer(int &sock, bool &mut_flag)
 {
 	int getch_client;
 
-	usleep(10000);
 	while (true)
 	{
 		if ((getch_client = getch()) == ' ')
@@ -446,10 +447,12 @@ int main()
 	{
 		numberOfPlayers = 2;
 		int socket = 0;
-
-		struct sockaddr_in address;
-		address = create_server(&server_fd);
-		socket = new_socket(server_fd, address);
+		ClientServer server(serverORclient);
+		server.createSocket();
+		server.setFlagsAndBindNameSocket();
+		server.listenForConnections();
+		server.acceptConnectionOnSocket();
+		socket = server.getSocket();
 		initMultiGame(game, "Player1", "Player2");
 		std::thread tKeyInput(getch_ret, std::ref(getch_ref),
 							  std::ref(mut_flag)); //thread for read from keyboard
@@ -476,6 +479,8 @@ int main()
 				tPlayer1Action.detach();
 				tPlayer2Action.detach();
 				tClientMove.detach();
+				close(socket);
+				close(server_fd);
 				return (0);
 			}
 			mut_flag = true;
@@ -496,37 +501,15 @@ int main()
 	else if (serverORclient == 2) // CLIENT MOD
 	{
 		numberOfPlayers = 2;
-		struct sockaddr_in address;
-		int sock = 0, valread;
-		struct sockaddr_in serv_addr;
 		char buffer[HEIGHT * WIDTH] = {0};
+		ClientServer client(serverORclient);
+		int sock = 0, valread;
 
-		if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-		{
-			printf("\n Socket creation error \n");
-			return -1;
-		}
-		memset(&serv_addr, '0', sizeof(serv_addr));
-
-		serv_addr.sin_family = AF_INET;
-		serv_addr.sin_port = htons(PORT);
-
-		// Convert IPv4 and IPv6 addresses from text to binary form
-		if (inet_pton(AF_INET, "10.111.5.7", &serv_addr.sin_addr) <= 0)
-		{
-			clear();
-			printw("\nInvalid address/ Address not supported \n");
-			refresh();
-			return -1;
-		}
-		if (connect(sock, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) <
-			0)
-		{
-			clear();
-			printw("\nConnection Failed \n");
-			refresh();
-			return -1;
-		}
+		client.createSocket();
+		client.setIP("10.111.6.8");
+		client.convertIPFromTextToBinary();
+		client.connectToServer();
+		sock = client.getServerFd();
 		std::thread thr1(readFromServer, std::ref(sock), std::ref(mut_flag));
 		long long epoch_server = 0;
 		char key;
@@ -545,19 +528,23 @@ int main()
 				if (key == 'y')
 					break;
 			}
+			key = 0;
+			usleep(1000);
 			clear();
+			if ((valread = read(sock, buffer, HEIGHT * (WIDTH + 1) + 1024)) <= 0)
+			{
+				print_game_over();
+				thr1.detach();
+				exit(0);
+			}
 			for (int k = 0; k < WIDTH; k++)
 				printw("-");
 			printw("\n");
-			key = 0;
-			usleep(1000);
 			bzero(buffer, sizeof(buffer));
 			if ((valread = read(sock, buffer, HEIGHT * (WIDTH + 1) + 1024)) <= 0)
 			{
-				clear();
-				::move(100, 100);
-				refresh();
-				refresh();
+				print_game_over();
+				thr1.detach();
 				exit(0);
 			}
 			printw("%s\n", buffer);
@@ -565,6 +552,7 @@ int main()
 				printw("-");
 			printw("\n");
 			refresh();
+			bzero(buffer, sizeof(buffer));
 		}
 	}
 }
