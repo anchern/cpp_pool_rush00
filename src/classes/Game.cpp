@@ -111,3 +111,4 @@ char *Game::getOneLineField()
 	return oneLineField;
 }
 
+

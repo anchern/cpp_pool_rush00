@@ -16,7 +16,7 @@
 void movePlayer(Game &game)
 {
 	Player *getPlayers;
-	
+
 	getPlayers = game.getPlayers();
 	for(int i = 0; i < numberOfPlayers; i++)
 	{
@@ -48,4 +48,16 @@ void moveStantardUnits(Game &game)
 		if (getUnits[i].get_location().x >= 0)
 			getUnits[i].move(getUnits[i].get_degrees());
 	}
+}
+
+void	destroyStandartUnits(Game &game)
+{
+	StandardUnit *standardUnits;
+	t_location	loc;
+
+	loc.x = -1;
+	loc.y = -1;
+	standardUnits = game.getStandartUnits();
+	for (int i = 0; i < STANDART_UNITS_NUMBER; i++)
+		standardUnits[i].set_location(loc);
 }

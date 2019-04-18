@@ -22,7 +22,7 @@ void	setPlayersOnField(Game &game)
 
 	for (int k = 0; k < numberOfPlayers; k++)
 	{
-		if (game.getPlayers()[k].get_location().x < 0)
+		if (game.getPlayers()[k].get_hp() <= 0)
 			continue;
 		tmp_loc = game.getPlayers()[k].getLocation();
 		for (int i = 0; i < HEIGHT_PLAYER_1; i++)
@@ -120,7 +120,7 @@ void	setEntitiesOnPrintField(Game &game)
 	bullet = game.getBullets();
 	for (int k = 0; k < numberOfPlayers; k++)
 	{
-		if (game.getPlayers()[k].get_location().x < 0)
+		if (game.getPlayers()[k].get_hp() == 0)
 			continue;
 		tmp_loc = game.getPlayers()[k].getLocation();
 		for (int i = 0; i < HEIGHT_PLAYER_1; i++)

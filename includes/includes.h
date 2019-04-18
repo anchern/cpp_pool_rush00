@@ -45,8 +45,8 @@ typedef struct	s_bullet
 
 t_bullet	*push_bullet_front(t_bullet *bullet, Bullet *bullet1);
 Bullet		*default_bullet_elem(t_location const &location);
-void		initSingleGame(Game &game, const std::string &player_name_1);
-void		initMultiGame(Game &game, const std::string &player_name_1, const std::string &player_name_2);
+void		initSingleGame(Game &game, std::string player_name_1);
+void		initMultiGame(Game &game, std::string player_name_1, std::string player_name_2);
 void		setEntitiesOnField(Game &game);
 void		setEntitiesOnPrintField(Game &game);
 void		standardUnitGeneration(Game &game);
@@ -64,6 +64,8 @@ int 		client_pause_menu(std::string *menu_items, int size,
 struct sockaddr_in	create_server(int &server_fd);
 int 		get_new_connect_socket(int server_fd, struct sockaddr_in &address);
 void		print_game_over();
+void 		free_bullets(t_bullet *bullet);
+void	destroyStandartUnits(Game &game);
 
 
 

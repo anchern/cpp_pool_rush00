@@ -19,6 +19,8 @@ void	checkCollision(GameEntity *GE1, GameEntity *GE2, Game &game)
 	int damageGE1;
 	int damageGE2;
 
+	if (GE1->get_location().x < 0 || GE2->get_location().x < 0)
+		return;
 	damageGE1 = GE1->get_damage();
 	damageGE2 = GE2->get_damage();
 	if (damageGE1 >= 0 && damageGE2 < 0)

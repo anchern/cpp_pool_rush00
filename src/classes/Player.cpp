@@ -41,8 +41,7 @@ void Player::takeDamage(Bullet &bullet)
 
 void Player::death()
 {
-	print_game_over();
-	set_hp(0);
+	this->_hp = 0;
 }
 
 t_bullet *Player::shot(t_bullet *bullets_list)

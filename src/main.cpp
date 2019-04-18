@@ -151,6 +151,8 @@ void	player1Action(int &getch_ref, Game &game, std::thread &thr1, bool &mut_flag
 				}
 				break;
 			case ' ':
+				if (game.getPlayers()[0].get_hp() <= 0)
+					break;
 				setPlayersOnField(game);
 				saveDegrees = game.getPlayers()[0].get_degrees();
 				game.getPlayers()[0].set_degrees(90);
@@ -158,7 +160,7 @@ void	player1Action(int &getch_ref, Game &game, std::thread &thr1, bool &mut_flag
 				game.getPlayers()[0].set_degrees(saveDegrees);
 				break;
 			default:
-				break;
+				setPlayersOnField(game);
 		}
 		getch_ref = 0;
 		usleep(70000);
@@ -228,6 +230,8 @@ void	player2Action(std::function<int(std::string *menu_items, int size,
 				}
 				break;
 			case ' ':
+				if (game.getPlayers()[1].get_hp() <= 0)
+					break;
 				setPlayersOnField(game);
 				saveDegrees = game.getPlayers()[1].get_degrees();
 				game.getPlayers()[1].set_degrees(90);
@@ -299,7 +303,8 @@ void	printField(Game &game, time_t sTime, int socket)
 	std::time(&time);
 	sCurTime = (time - sTime) % 60;
 	mCurTime = (time - sTime) / 60;
-	sendData(socket, game, sCurTime, mCurTime);
+	if (numberOfPlayers == 2)
+		sendData(socket, game, sCurTime, mCurTime);
 	clear();
 	if (numberOfPlayers == 2)
 		printw("%s | HP: %d | %s | HP: %d |\nTime: %.2ld:%.2ld | Score: %u\n",
@@ -307,9 +312,8 @@ void	printField(Game &game, time_t sTime, int socket)
 			game.getPlayers()[1].get_name().c_str(),game.getPlayers()[1].get_hp(),
 			mCurTime,sCurTime, game.getScore());
 	else if (numberOfPlayers == 1)
-		printw("%s | HP: %d |x: %d|y: %d|\nTime: %.2ld:%.2ld | Score: %u\n",
+		printw("%s | HP: %d |\nTime: %.2ld:%.2ld | Score: %u\n",
 			   game.getPlayers()[0].get_name().c_str(),game.getPlayers()[0].get_hp(),
-			   game.getPlayers()[0].get_location().x, game.getPlayers()[0].get_location().y,
 			   mCurTime,sCurTime, game.getScore());
 	for (int k = 0; k < WIDTH; k++)
 		printw("-");
@@ -370,10 +374,11 @@ int main()
 	std::string menu_items[MENU_ITEM] = {"SINGLE PLAYER",
 										 "MULTI PLAYER",
 										 "EXIT"};
-	int serverORclient = 0;
+	int serverOrClient = 0;
 	std::string multiPlayerMenu_items[MULTIPLAYERMENU_ITEM] = {"CREATE GAME", "JOIN THE GAME"};
-	std::string my_name;
-	int server_fd = 0;
+
+	char my_name[64];
+	char player2Name[64];
 
 	setlocale(LC_ALL, "");
 	initscr();
@@ -381,178 +386,196 @@ int main()
 	keypad(stdscr, TRUE);
 
 
-	switch (menu(menu_items, MENU_ITEM))
+	while (true)
 	{
-		case 1:
-			break;
-		case 2:
-			switch (menu(multiPlayerMenu_items, MULTIPLAYERMENU_ITEM))
-			{
-				case 1:
-					serverORclient = 1;
-					break;
-				case 2:
-					serverORclient = 2;
-					break;
-				default:
-					break;
-			}
-			break;
-		case 3:
-			clear();
-			refresh();
-			return (0);
-		default:
-			break;
-	}
-
-
-
-	if (serverORclient == 0)
-	{
-		numberOfPlayers = 1;
-		initSingleGame(game, "Player1");
-		std::thread tKeyInput(getch_ret, std::ref(getch_ref),
-							  std::ref(mut_flag)); //thread for read from keyboard
-		std::thread tPlayer1Action(player1Action, std::ref(getch_ref),
-								   std::ref(game),
-								   std::ref(tKeyInput), std::ref(mut_flag));
-		std::time(&sTime);
-		while (true)
+		numberOfPlayers = 0;
+		switch (menu(menu_items, MENU_ITEM))
 		{
-			while (mut_flag)
-				;
-			if (game.getPlayers()[0].get_hp() == 0)
-			{
-				tKeyInput.detach();
-				tPlayer1Action.detach();
-				return (0);
-			}
-			if (j % 18 == 0)
-				standardUnitGeneration(game);
-			mut_flag = true;
-			score_calc(game);
-			setEntitiesOnPrintField(game);
-			printField(game, sTime, 0);
-			game.clsField();
-			game.clsGameEntities();
-			standardUnitActions(j, game);
-			delete_and_move_bullets(game, mut_flag);
-			mut_flag = false;
-			usleep(70000);
-			j++;
-		}
-	}
-	else if (serverORclient == 1)
-	{
-		numberOfPlayers = 2;
-		int socket = 0;
-		ClientServer server(serverORclient);
-		server.createSocket();
-		server.setFlagsAndBindNameSocket();
-		server.listenForConnections();
-		server.acceptConnectionOnSocket();
-		socket = server.getSocket();
-		initMultiGame(game, "Player1", "Player2");
-		std::thread tKeyInput(getch_ret, std::ref(getch_ref),
-							  std::ref(mut_flag)); //thread for read from keyboard
-		std::thread tPlayer1Action(player1Action, std::ref(getch_ref),
-								   std::ref(game),
-								   std::ref(tKeyInput), std::ref(mut_flag));
-		std::function<int(std::string *menu_items, int size, int &client_getch_ref,
-						  int socket)> menu_func = client_pause_menu;
-		std::thread tClientMove(takeClientMove, std::ref(client_getch_ref), socket,
-								std::ref(mut_flag));
-		std::thread tPlayer2Action(player2Action, std::ref(menu_func),
-								   std::ref(client_getch_ref), std::ref(game),
-								   std::ref(tClientMove), std::ref(mut_flag),
-								   socket);
-
-		std::time(&sTime);
-		while (true)
-		{
-			while (mut_flag)
-				;
-			if (game.getPlayers()[0].get_hp() == 0 || game.getPlayers()[1].get_hp() == 0)
-			{
-				tKeyInput.detach();
-				tPlayer1Action.detach();
-				tPlayer2Action.detach();
-				tClientMove.detach();
-				close(socket);
-				close(server_fd);
-				return (0);
-			}
-			mut_flag = true;
-			if (j % 18 == 0)
-				standardUnitGeneration(game);
-			score_calc(game);
-			setEntitiesOnPrintField(game);
-			printField(game, sTime, socket);
-			game.clsField();
-			game.clsGameEntities();
-			standardUnitActions(j, game);
-			delete_and_move_bullets(game, mut_flag);
-			mut_flag = false;
-			usleep(70000);
-			j++;
-		}
-	}
-	else if (serverORclient == 2) // CLIENT MOD
-	{
-		numberOfPlayers = 2;
-		char buffer[HEIGHT * WIDTH] = {0};
-		ClientServer client(serverORclient);
-		int sock = 0, valread;
-
-		client.createSocket();
-		client.setIP("10.111.6.8");
-		client.convertIPFromTextToBinary();
-		client.connectToServer();
-		sock = client.getServerFd();
-		std::thread thr1(readFromServer, std::ref(sock), std::ref(mut_flag));
-		long long epoch_server = 0;
-		char key;
-		while (true)
-		{
-			while (mut_flag)
-			{
-				valread = read(sock, buffer, 1024);
+			case 1:
+				serverOrClient = 0;
+				break;
+			case 2:
+				switch (menu(multiPlayerMenu_items, MULTIPLAYERMENU_ITEM))
+				{
+					case 1:
+						serverOrClient = 1;
+						break;
+					case 2:
+						serverOrClient = 2;
+						break;
+					default:
+						break;
+				}
+				break;
+			case 3:
 				clear();
+				refresh();
+				return (0);
+			default:
+				break;
+		}
+		clear();
+		printw("ENTER YOUR NAME: ");
+		echo();
+		refresh();
+		scanw("%s\n", my_name);
+		noecho();
+
+		if (serverOrClient == 0)
+		{
+			numberOfPlayers = 1;
+			initSingleGame(game, my_name);
+			std::thread tKeyInput(getch_ret, std::ref(getch_ref),
+								  std::ref(mut_flag)); //thread for read from keyboard
+			std::thread tPlayer1Action(player1Action, std::ref(getch_ref),
+									   std::ref(game),
+									   std::ref(tKeyInput), std::ref(mut_flag));
+			std::time(&sTime);
+			while (true)
+			{
+				while (mut_flag);
+				if (game.getPlayers()[0].get_hp() <= 0)
+				{
+					tKeyInput.detach();
+					tPlayer1Action.detach();
+					print_game_over();
+					return (0);
+				}
+				if (j % 18 == 0)
+					standardUnitGeneration(game);
+				mut_flag = true;
+				score_calc(game);
+				setEntitiesOnPrintField(game);
+				printField(game, sTime, 0);
+				game.clsField();
+				game.clsGameEntities();
+				standardUnitActions(j, game);
+				delete_and_move_bullets(game, mut_flag);
+				mut_flag = false;
+				usleep(70000);
+				j++;
+			}
+		}
+		else if (serverOrClient == 1)
+		{
+			numberOfPlayers = 2;
+			int socket = 0;
+			ClientServer server(serverOrClient);
+			server.createSocket();
+			server.setFlagsAndBindNameSocket();
+			server.listenForConnections();
+			server.acceptConnectionOnSocket();
+			socket = server.getSocket();
+			read(socket, player2Name, 64);
+			initMultiGame(game, my_name, player2Name);
+			std::thread tKeyInput(getch_ret, std::ref(getch_ref),
+								  std::ref(
+										  mut_flag)); //thread for read from keyboard
+			std::thread tPlayer1Action(player1Action, std::ref(getch_ref),
+									   std::ref(game),
+									   std::ref(tKeyInput), std::ref(mut_flag));
+			std::function<int(std::string *menu_items, int size,
+							  int &client_getch_ref,
+							  int socket)> menu_func = client_pause_menu;
+			std::thread tClientMove(takeClientMove, std::ref(client_getch_ref),
+									socket,
+									std::ref(mut_flag));
+			std::thread tPlayer2Action(player2Action, std::ref(menu_func),
+									   std::ref(client_getch_ref),
+									   std::ref(game),
+									   std::ref(tClientMove),
+									   std::ref(mut_flag),
+									   socket);
+
+			std::time(&sTime);
+			while (true)
+			{
+				while (mut_flag)
+					;
+				if (game.getPlayers()[0].get_hp() <= 0 &&
+					game.getPlayers()[1].get_hp() <= 0)
+				{
+					tKeyInput.detach();
+					tPlayer1Action.detach();
+					tPlayer2Action.detach();
+					tClientMove.detach();
+					close(socket);
+					close(server.getServerFd());
+					return (0);
+				}
+				mut_flag = true;
+				if (j % 18 == 0)
+					standardUnitGeneration(game);
+				score_calc(game);
+				setEntitiesOnPrintField(game);
+				printField(game, sTime, socket);
+				game.clsField();
+				game.clsGameEntities();
+				standardUnitActions(j, game);
+				delete_and_move_bullets(game, mut_flag);
+				mut_flag = false;
+				usleep(70000);
+				j++;
+			}
+		} else if (serverOrClient == 2) // CLIENT MOD
+		{
+			numberOfPlayers = 2;
+			char buffer[HEIGHT * WIDTH] = {0};
+			ClientServer client(serverOrClient);
+			int sock = 0, valread;
+
+			client.createSocket();
+			client.setIP("10.111.6.8");
+			client.convertIPFromTextToBinary();
+			client.connectToServer();
+			sock = client.getServerFd();
+			std::thread tReadFromServer(readFromServer, std::ref(sock),
+										std::ref(mut_flag));
+			send(sock, my_name, 64, 0);
+			char key;
+			while (true)
+			{
+				while (mut_flag)
+				{
+					valread = read(sock, buffer, 1024);
+					clear();
+					printw("%s\n", buffer);
+					refresh();
+					bzero(buffer, sizeof(buffer));
+				}
+				while ((valread = read(sock, &key, 1)) > 0)
+				{
+					if (key == 'y')
+						break;
+				}
+				key = 0;
+				usleep(1000);
+				clear();
+				if ((valread = read(sock, buffer, 1024)) <= 0)
+				{
+					print_game_over();
+					tReadFromServer.detach();
+					exit(0);
+				}
+				printw("%s", buffer);
+				for (int k = 0; k < WIDTH; k++)
+					printw("-");
+				printw("\n");
+				usleep(1000);
+				bzero(buffer, sizeof(buffer));
+				if ((valread = read(sock, buffer, HEIGHT * (WIDTH + 1))) <= 0)
+				{
+					print_game_over();
+					tReadFromServer.detach();
+					exit(0);
+				}
 				printw("%s\n", buffer);
+				for (int k = 0; k < WIDTH; k++)
+					printw("-");
+				printw("\n");
 				refresh();
 				bzero(buffer, sizeof(buffer));
 			}
-			while ((valread = read(sock, &key, 1)) > 0)
-			{
-				if (key == 'y')
-					break;
-			}
-			key = 0;
-			usleep(1000);
-			clear();
-			if ((valread = read(sock, buffer, HEIGHT * (WIDTH + 1) + 1024)) <= 0)
-			{
-				print_game_over();
-				thr1.detach();
-				exit(0);
-			}
-			for (int k = 0; k < WIDTH; k++)
-				printw("-");
-			printw("\n");
-			bzero(buffer, sizeof(buffer));
-			if ((valread = read(sock, buffer, HEIGHT * (WIDTH + 1) + 1024)) <= 0)
-			{
-				print_game_over();
-				thr1.detach();
-				exit(0);
-			}
-			printw("%s\n", buffer);
-			for (int k = 0; k < WIDTH; k++)
-				printw("-");
-			printw("\n");
-			refresh();
-			bzero(buffer, sizeof(buffer));
 		}
 	}
 }
