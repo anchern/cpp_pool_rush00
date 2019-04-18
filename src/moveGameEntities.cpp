@@ -18,7 +18,7 @@ void movePlayer(Game &game)
 	Player *getPlayers;
 	
 	getPlayers = game.getPlayers();
-	for(int i = 0; i < NUMBEROFPLAYERS; i++)
+	for(int i = 0; i < numberOfPlayers; i++)
 	{
 		if (getPlayers[i].get_location().x >= 0)
 			getPlayers[i].move(getPlayers[i].get_degrees());

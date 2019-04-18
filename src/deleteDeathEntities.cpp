@@ -7,7 +7,7 @@ void	deleteDeathEntities(Game &game)
 	t_bullet *bullet;
 
 	bullet = game.getBullets();
-	for (int i = 0; i < NUMBEROFPLAYERS; i++)
+	for (int i = 0; i < numberOfPlayers; i++)
 	{
 		if (game.getPlayers()[i].get_hp() == 0)
 			game.getPlayers()[i].death();

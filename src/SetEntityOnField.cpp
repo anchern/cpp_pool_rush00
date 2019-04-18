@@ -6,7 +6,7 @@ bool	checkPlayersCollision(Game &game, GameEntity *gameEntity)
 	int i;
 
 	i = 0;
-	while (i < NUMBEROFPLAYERS)
+	while (i < numberOfPlayers)
 	{
 		if (gameEntity == (GameEntity *)&game.getPlayers()[i])
 			return (false);
@@ -20,7 +20,7 @@ void	setPlayersOnField(Game &game)
 	t_location tmp_loc;
 	GameEntity *gameEntity;
 
-	for (int k = 0; k < NUMBEROFPLAYERS; k++)
+	for (int k = 0; k < numberOfPlayers; k++)
 	{
 		if (game.getPlayers()[k].get_location().x < 0)
 			continue;
@@ -32,13 +32,8 @@ void	setPlayersOnField(Game &game)
 				if (game.getPlayers()[k]._avatar[i][j] != ' ')
 				{
 					gameEntity = game.getGameEntitys(tmp_loc.y + i, tmp_loc.x + j);
-					if (gameEntity != NULL && checkPlayersCollision(game, gameEntity))
-					{
-//						file << tmp_loc.y << " "<< tmp_loc.x << "collision obj" << std::endl;
-//						print_bull_coords(game.getBullets());
-//						file << "---------------------------------------";
+					if (gameEntity != nullptr && checkPlayersCollision(game, gameEntity))
 						checkCollision(gameEntity, (GameEntity *) &game.getPlayers()[k], game);
-					}
 					else
 						game.setGameEntitys(tmp_loc.y + i, tmp_loc.x + j, &game.getPlayers()[k]);
 				}
@@ -63,7 +58,7 @@ void	setStandardUnitsOnField(Game &game)
 				if (game.getStandartUnits()[i].avatar[j][k] != ' ')
 				{
 					if (game.getGameEntitys(tmp_loc.y + j, tmp_loc.x + k) !=
-							NULL && game.getGameEntitys(tmp_loc.y + j,
+								nullptr && game.getGameEntitys(tmp_loc.y + j,
 									tmp_loc.x + k) != (GameEntity *)&game.getStandartUnits()[i])
 						checkCollision(game.getGameEntitys(tmp_loc.y + j, tmp_loc.x +
 						k), (GameEntity *)&game.getStandartUnits()[i], game);
@@ -94,17 +89,8 @@ void	setBulletsOnField(Game &game)
 		if (tmp_loc.x != -1 && game.getGameEntitys(tmp_loc.y , tmp_loc.x) != NULL &&
 			game.getGameEntitys(tmp_loc.y, tmp_loc.x) !=
 			(GameEntity *)bullet->bullet)
-		{
-//			std::cout << tmp_loc.y << " "<< tmp_loc.x << "collision obj" <<
-//			" y: " << game.getGameEntitys(tmp_loc.y, tmp_loc.x)->get_location().y <<
-//			" x: " << game.getGameEntitys(tmp_loc.y, tmp_loc.x)->get_location().x<< std::endl;
-////			print_bull_coords(game.getBullets());
-//			std::cout << "---------------------------------------\n";
-//			exit(1);
 			checkCollision(game.getGameEntitys(tmp_loc.y, tmp_loc.x),
 						   (GameEntity *) bullet->bullet, game);
-			bullet->bullet->set_damage(0);
-		}
 		if (tmp_loc.y > 0 && tmp_loc.y < HEIGHT &&
 				tmp_loc.x > 0 && tmp_loc.x < WIDTH)
 			game.setGameEntitys(tmp_loc.y, tmp_loc.x, bullet->bullet);
@@ -132,8 +118,7 @@ void	setEntitiesOnPrintField(Game &game)
 	t_bullet	*bullet;
 
 	bullet = game.getBullets();
-
-	for (int k = 0; k < NUMBEROFPLAYERS; k++)
+	for (int k = 0; k < numberOfPlayers; k++)
 	{
 		if (game.getPlayers()[k].get_location().x < 0)
 			continue;

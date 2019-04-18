@@ -44,9 +44,9 @@ private:
 	Weapon		_weapon[3];
 public:
 	char		_avatar[HEIGHT_PLAYER_1][WIDTH_PLAYER_1] =  {	"   ^   ",
-												 			"  (4)  ",
-												 			" /|2|\\ ",
-												 			"/_|||_\\"};
+												 				"  (4)  ",
+												 				" /|2|\\ ",
+												 				"/_|||_\\"};
 };
 
 #endif //C_POOL_PLAYER_HPP

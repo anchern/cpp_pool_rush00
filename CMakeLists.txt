@@ -22,6 +22,6 @@ add_executable(rush00
         src/DeleteBullets.cpp src/main.cpp src/CreateGame.cpp
         src/SetEntityOnField.cpp src/StandardUnitGeneration.cpp
         src/moveGameEntities.cpp src/checkCollision.cpp
-        src/deleteDeathEntities.cpp src/menu.cpp)
+        src/deleteDeathEntities.cpp src/menu.cpp src/networking.cpp)
 
 target_link_libraries(rush00 -lncurses)

@@ -1,25 +1,39 @@
 #include "classes/Game.hpp"
 #include <stdlib.h>
 #include <sstream>
+#include <iostream>
+#include "ncurses.h"
+#include <unistd.h>
+
+#include <stdio.h>
+#include <sys/socket.h>
+#include <stdlib.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <arpa/inet.h>
+#include <thread>
+#include <mutex>
+#include <chrono>
+
+#include <unistd.h>
+#include <iostream>
 
 #define MENU_ITEM 3
 #define PAUSE_ITEM 2
 
-#define PORT 4242
-
-//FILE *file = std::fopen("/Users/achernys/cpp_pool_rush00/logs", "rwa");
-
-void print_bull_coords(t_bullet *bullets)
-{
-	if (bullets == 0)
-	{
-		file << "NULL\n";
-		return;
-	}
-	file << "x: " << bullets->bullet->get_location().x << "| y: " <<
-						bullets->bullet->get_location().y << std::endl;
-	print_bull_coords(bullets->next);
-}
+int numberOfPlayers;
+//
+//void print_bull_coords(t_bullet *bullets)
+//{
+//	if (bullets == 0)
+//	{
+//		file << "NULL\n";
+//		return;
+//	}
+//	file << "x: " << bullets->bullet->get_location().x << "| y: " <<
+//						bullets->bullet->get_location().y << std::endl;
+//	print_bull_coords(bullets->next);
+//}
 
 void	getch_ret(int &getch_ref, bool &mut_flag)
 {
@@ -34,6 +48,17 @@ void	getch_ret(int &getch_ref, bool &mut_flag)
 	}
 }
 
+
+void takeClientMove(int &client_getch_ref, int socket, bool &mut_flag)
+{
+	while (true)
+	{
+		read(socket, &client_getch_ref, 4);
+		if (client_getch_ref == 27)
+			mut_flag = true;
+
+	}
+}
 
 void	delete_and_move_bullets(Game &game, bool &mute_flag)
 {
@@ -227,7 +252,7 @@ void score_calc(Game &game)
 		if (game.getStandartUnits()[i].get_location().x != -1)
 			number_of_units++;
 	}
-	for (int i = 0; i < NUMBEROFPLAYERS; i++)
+	for (int i = 0; i < numberOfPlayers; i++)
 		if (game.getPlayers()[i].get_hp() == 0)
 			game.getPlayers()[i].death();
 	for (int i = 0; i < STANDART_UNITS_NUMBER; i++)
@@ -274,15 +299,20 @@ void	printField(Game &game, time_t sTime, int socket)
 	mCurTime = (time - sTime) / 60;
 	sendData(socket, game, sCurTime, mCurTime);
 	clear();
-	printw("%s | HP: %d | %s | HP: %d |\nTime: %.2ld:%.2ld | Score: %u\n",
+	if (numberOfPlayers == 2)
+		printw("%s | HP: %d | %s | HP: %d |\nTime: %.2ld:%.2ld | Score: %u\n",
 			game.getPlayers()[0].get_name().c_str(),game.getPlayers()[0].get_hp(),
 			game.getPlayers()[1].get_name().c_str(),game.getPlayers()[1].get_hp(),
 			mCurTime,sCurTime, game.getScore());
+	else if (numberOfPlayers == 1)
+		printw("%s | HP: %d |x: %d|y: %d|\nTime: %.2ld:%.2ld | Score: %u\n",
+			   game.getPlayers()[0].get_name().c_str(),game.getPlayers()[0].get_hp(),
+			   game.getPlayers()[0].get_location().x, game.getPlayers()[0].get_location().y,
+			   mCurTime,sCurTime, game.getScore());
 	for (int k = 0; k < WIDTH; k++)
 		printw("-");
 	printw("\n");
 	game.printField();
-//	printw("%s\n", game.getOneLineField());
 	for (int k = 0; k < WIDTH; k++)
 		printw("-");
 	printw("\n");
@@ -309,80 +339,23 @@ void	standardUnitActions(int j, Game &game)
 
 
 
-struct sockaddr_in	create_server(int *server_fd)
+void	readFromServer(int &sock, bool &mut_flag)
 {
-	int valread;
-	struct sockaddr_in address;
-	int opt = 1;
-	int addrlen = sizeof(address);
-	char buffer[1024] = {0};
-	std::string hello = "";
+	int getch_client;
 
-	// Creating socket file descriptor
-	if ((*server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
-	{
-		perror("socket failed");
-		exit(EXIT_FAILURE);
-	}
-
-	// Forcefully attaching socket to the port 8080
-	if (setsockopt(*server_fd, SOL_SOCKET,  SO_REUSEPORT,
-				   &opt, sizeof(opt)))
-	{
-		perror("setsockopt");
-		exit(EXIT_FAILURE);
-	}
-	address.sin_family = AF_INET;
-	address.sin_addr.s_addr = INADDR_ANY;
-	address.sin_port = htons( PORT );
-
-	// Forcefully attaching socket to the port 8080
-	if (bind(*server_fd, (struct sockaddr *)&address,
-			 sizeof(address)) < 0)
-	{
-		perror("bind failed");
-		exit(EXIT_FAILURE);
-	}
-	if (listen(*server_fd, 3) < 0)
-	{
-		perror("listen");
-		exit(EXIT_FAILURE);
-	}
-
-
-	return (address);
-}
-
-int new_socket(int server_fd, struct sockaddr_in &address)
-{
-	int  new_socket;
-	int addrlen = sizeof(address);
-
-	clear();
-	printw("Wait to connect...\n");
-	refresh();
-	if ((new_socket = accept(server_fd, (struct sockaddr *)&address,
-							 (socklen_t*)&addrlen))<0)
-	{
-		perror("accept");
-		exit(EXIT_FAILURE);
-	}
-	clear();
-	printw("Socket %d connected.\n", new_socket);
-	refresh();
-	return (new_socket);
-}
-
-void takeClientMove(int &client_getch_ref, int socket, bool &mut_flag)
-{
+	usleep(10000);
 	while (true)
 	{
-		read(socket, &client_getch_ref, 4);
-		if (client_getch_ref == 27)
+		if ((getch_client = getch()) == ' ')
+			beep();
+		if (getch_client == 27)
 			mut_flag = true;
-
+		if (getch_client == '\n')
+			mut_flag = false;
+		send(sock, &getch_client, 4, 0);
 	}
 }
+
 
 int main()
 {
@@ -396,97 +369,202 @@ int main()
 	std::string menu_items[MENU_ITEM] = {"SINGLE PLAYER",
 										 "MULTI PLAYER",
 										 "EXIT"};
-//	long long jjjjj;
+	int serverORclient = 0;
+	std::string multiPlayerMenu_items[MULTIPLAYERMENU_ITEM] = {"CREATE GAME", "JOIN THE GAME"};
 	std::string my_name;
-	int socket = 0;
-	struct sockaddr_in address;
 	int server_fd = 0;
 
-	file.open("/Users/achernys/cpp_pool_rush00/logs", std::ios::out | std::ios::app);
 	setlocale(LC_ALL, "");
 	initscr();
 	noecho();
 	keypad(stdscr, TRUE);
-	initMultiGame(game, "Player1", "Player2");
 
-//	std::thread tMusic([](){
-//		while (true)
-//			system("afplay Sound1.mp3");
-//	});
+
 	switch (menu(menu_items, MENU_ITEM))
 	{
 		case 1:
 			break;
 		case 2:
-			address = create_server(&server_fd);
-			socket = new_socket(server_fd, address);
+			switch (menu(multiPlayerMenu_items, MULTIPLAYERMENU_ITEM))
+			{
+				case 1:
+					serverORclient = 1;
+					break;
+				case 2:
+					serverORclient = 2;
+					break;
+				default:
+					break;
+			}
 			break;
 		case 3:
-			printw("Bye!\n");
+			clear();
+			refresh();
 			return (0);
 		default:
 			break;
 	}
-//	if (socket != 0)
-//	{
-//		char mess[] = "Bye!";
-//		send(socket, mess, 5, 0);
-//		printw("Socket %d kicked\n", socket);
-//		close(socket);
-//		getch();
-//		socket = new_socket(server_fd, address);
-//
-//		exit(1);
-//	}
-//	std::chrono::system_clock::time_point tp;
-//	std::chrono::system_clock::duration start_program;
-	std::function<int(std::string *menu_items, int size, int &client_getch_ref,
-					  int socket)> menu_func = client_pause_menu;
-	std::thread tKeyInput(getch_ret, std::ref(getch_ref),
-						  std::ref(mut_flag)); //thread for read from keyboard
-	std::thread tPlayer1Action(player1Action, std::ref(getch_ref),
-							   std::ref(game),
-							   std::ref(tKeyInput), std::ref(mut_flag));
-	std::thread tClientMove(takeClientMove, std::ref(client_getch_ref), socket,
-							std::ref(mut_flag));
-	std::thread tPlayer2Action(player2Action, std::ref(menu_func),
-							   std::ref(client_getch_ref), std::ref(game),
-							   std::ref(tClientMove), std::ref(mut_flag),
-							   socket);
 
-	std::time(&sTime);
-//	std::string kkkk;
-	while (true)
+
+
+	if (serverORclient == 0)
 	{
-		while (mut_flag)
-			;
-		if (game.getPlayers()[0].get_hp() == 0 || game.getPlayers()[1].get_hp() == 0)
+		numberOfPlayers = 1;
+		initSingleGame(game, "Player1");
+		std::thread tKeyInput(getch_ret, std::ref(getch_ref),
+							  std::ref(mut_flag)); //thread for read from keyboard
+		std::thread tPlayer1Action(player1Action, std::ref(getch_ref),
+								   std::ref(game),
+								   std::ref(tKeyInput), std::ref(mut_flag));
+		std::time(&sTime);
+		while (true)
 		{
-			tKeyInput.detach();
-			tPlayer1Action.detach();
-			tPlayer2Action.detach();
-			tClientMove.detach();
-			return (0);
+			while (mut_flag)
+				;
+			if (game.getPlayers()[0].get_hp() == 0)
+			{
+				tKeyInput.detach();
+				tPlayer1Action.detach();
+				return (0);
+			}
+			if (j % 18 == 0)
+				standardUnitGeneration(game);
+			mut_flag = true;
+			score_calc(game);
+			setEntitiesOnPrintField(game);
+			printField(game, sTime, 0);
+			game.clsField();
+			game.clsGameEntities();
+			standardUnitActions(j, game);
+			delete_and_move_bullets(game, mut_flag);
+			mut_flag = false;
+			usleep(70000);
+			j++;
 		}
-		if (j % 18 == 0)
-			standardUnitGeneration(game);
-		mut_flag = true;
-		score_calc(game);
-		setEntitiesOnPrintField(game);
-		printField(game, sTime, socket);
-		game.clsField();
-		game.clsGameEntities();
-//		tp = std::chrono::system_clock::now();
-//		start_program = tp.time_since_epoch();
-//		jjjjj = start_program.count();
-//		kkkk = std::to_string(jjjjj);
-//		refresh();
-//		send(socket, kkkk.c_str(), kkkk.length(), 0);
+	}
+	else if (serverORclient == 1)
+	{
+		numberOfPlayers = 2;
+		int socket = 0;
 
-		standardUnitActions(j, game);
-		delete_and_move_bullets(game, mut_flag);
-		mut_flag = false;
-		usleep(70000);
-		j++;
+		struct sockaddr_in address;
+		address = create_server(&server_fd);
+		socket = new_socket(server_fd, address);
+		initMultiGame(game, "Player1", "Player2");
+		std::thread tKeyInput(getch_ret, std::ref(getch_ref),
+							  std::ref(mut_flag)); //thread for read from keyboard
+		std::thread tPlayer1Action(player1Action, std::ref(getch_ref),
+								   std::ref(game),
+								   std::ref(tKeyInput), std::ref(mut_flag));
+		std::function<int(std::string *menu_items, int size, int &client_getch_ref,
+						  int socket)> menu_func = client_pause_menu;
+		std::thread tClientMove(takeClientMove, std::ref(client_getch_ref), socket,
+								std::ref(mut_flag));
+		std::thread tPlayer2Action(player2Action, std::ref(menu_func),
+								   std::ref(client_getch_ref), std::ref(game),
+								   std::ref(tClientMove), std::ref(mut_flag),
+								   socket);
+
+		std::time(&sTime);
+		while (true)
+		{
+			while (mut_flag)
+				;
+			if (game.getPlayers()[0].get_hp() == 0 || game.getPlayers()[1].get_hp() == 0)
+			{
+				tKeyInput.detach();
+				tPlayer1Action.detach();
+				tPlayer2Action.detach();
+				tClientMove.detach();
+				return (0);
+			}
+			mut_flag = true;
+			if (j % 18 == 0)
+				standardUnitGeneration(game);
+			score_calc(game);
+			setEntitiesOnPrintField(game);
+			printField(game, sTime, socket);
+			game.clsField();
+			game.clsGameEntities();
+			standardUnitActions(j, game);
+			delete_and_move_bullets(game, mut_flag);
+			mut_flag = false;
+			usleep(70000);
+			j++;
+		}
+	}
+	else if (serverORclient == 2) // CLIENT MOD
+	{
+		numberOfPlayers = 2;
+		struct sockaddr_in address;
+		int sock = 0, valread;
+		struct sockaddr_in serv_addr;
+		char buffer[HEIGHT * WIDTH] = {0};
+
+		if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+		{
+			printf("\n Socket creation error \n");
+			return -1;
+		}
+		memset(&serv_addr, '0', sizeof(serv_addr));
+
+		serv_addr.sin_family = AF_INET;
+		serv_addr.sin_port = htons(PORT);
+
+		// Convert IPv4 and IPv6 addresses from text to binary form
+		if (inet_pton(AF_INET, "10.111.5.7", &serv_addr.sin_addr) <= 0)
+		{
+			clear();
+			printw("\nInvalid address/ Address not supported \n");
+			refresh();
+			return -1;
+		}
+		if (connect(sock, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) <
+			0)
+		{
+			clear();
+			printw("\nConnection Failed \n");
+			refresh();
+			return -1;
+		}
+		std::thread thr1(readFromServer, std::ref(sock), std::ref(mut_flag));
+		long long epoch_server = 0;
+		char key;
+		while (true)
+		{
+			while (mut_flag)
+			{
+				valread = read(sock, buffer, 1024);
+				clear();
+				printw("%s\n", buffer);
+				refresh();
+				bzero(buffer, sizeof(buffer));
+			}
+			while ((valread = read(sock, &key, 1)) > 0)
+			{
+				if (key == 'y')
+					break;
+			}
+			clear();
+			for (int k = 0; k < WIDTH; k++)
+				printw("-");
+			printw("\n");
+			key = 0;
+			usleep(1000);
+			bzero(buffer, sizeof(buffer));
+			if ((valread = read(sock, buffer, HEIGHT * (WIDTH + 1) + 1024)) <= 0)
+			{
+				clear();
+				::move(100, 100);
+				refresh();
+				refresh();
+				exit(0);
+			}
+			printw("%s\n", buffer);
+			for (int k = 0; k < WIDTH; k++)
+				printw("-");
+			printw("\n");
+			refresh();
+		}
 	}
 }

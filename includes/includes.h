@@ -5,8 +5,8 @@
 #ifndef C_POOL_INCLUDES_H
 #define C_POOL_INCLUDES_H
 
-#define HEIGHT	60
-#define WIDTH	120
+
+
 
 #include <cmath>
 #include <iostream>
@@ -22,6 +22,11 @@
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
+
+#define HEIGHT	60
+#define WIDTH	120
+#define MULTIPLAYERMENU_ITEM 2
+#define PORT 4242
 
 class Bullet;
 class Game;
@@ -59,6 +64,8 @@ void		setBulletsOnField(Game &game);
 int 		menu(std::string *menu_items, int size);
 int 		client_pause_menu(std::string *menu_items, int size,
 								int &client_getch_ref, int socket);
+struct sockaddr_in	create_server(int *server_fd);
+int 		new_socket(int server_fd, struct sockaddr_in &address);
 
 
 

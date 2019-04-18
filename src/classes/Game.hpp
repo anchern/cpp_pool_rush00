@@ -14,10 +14,11 @@
 
 
 
-#define NUMBEROFPLAYERS 2
 #define STANDART_UNITS_NUMBER 50
+#define MAX_PLAYERS 2
 
-static std::ofstream file;
+extern int numberOfPlayers;
+
 
 class Game
 {
@@ -51,7 +52,7 @@ public:
 	void setScore(unsigned int score);
 
 private:
-	Player players[NUMBEROFPLAYERS];
+	Player players[MAX_PLAYERS];
 	StandardUnit StandartUnits[STANDART_UNITS_NUMBER];
 	GameEntity *gameEntities[HEIGHT][WIDTH];
 	t_bullet *bullets;
