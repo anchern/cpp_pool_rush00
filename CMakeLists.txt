@@ -22,6 +22,6 @@ add_executable(rush00
         src/DeleteBullets.cpp src/main.cpp src/CreateGame.cpp
         src/SetEntityOnField.cpp src/StandardUnitGeneration.cpp
         src/moveGameEntities.cpp src/checkCollision.cpp
-        src/deleteDeathEntities.cpp src/menu.cpp src/print_game_over.cpp src/classes/ClientServer.cpp src/classes/ClientServer.hpp src/playersActions.cpp src/soloServerClientModes.cpp src/score.cpp)
+        src/deleteDeathEntities.cpp src/menu.cpp src/print_game_over.cpp src/classes/ClientServer.cpp src/classes/ClientServer.hpp src/playersActions.cpp src/soloServerClientModes.cpp src/score.cpp src/BackgroundActions.cpp)
 
 target_link_libraries(rush00 -lncurses)

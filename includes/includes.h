@@ -12,7 +12,6 @@
 #include <iostream>
 #include "ncurses.h"
 #include <unistd.h>
-#include <thread>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -43,6 +42,14 @@ typedef struct	s_bullet
 	struct s_bullet *next;
 }				t_bullet;
 
+typedef struct	s_stars
+{
+    int x;
+    int y;
+    struct s_stars *next;
+}				t_stars;
+
+
 t_bullet	*push_bullet_front(t_bullet *bullet, Bullet *bullet1);
 Bullet		*default_bullet_elem(t_location const &location);
 void		initSingleGame(Game &game, std::string player_name_1);
@@ -66,12 +73,10 @@ int 		get_new_connect_socket(int server_fd, struct sockaddr_in &address);
 void		print_game_over();
 void 		free_bullets(t_bullet *bullet);
 void	destroyStandartUnits(Game &game);
-void	player2Action(std::function<int(std::string *menu_items, int size,
-										int &client_getch_ref, int socket)> &menu,int &client_getch_ref,
-					  Game &game, std::thread &thr1, bool &mut_flag, int socket);
-void	player1Action(int &getch_ref, Game &game, std::thread &thr1, bool &mut_flag);
-void	delete_and_move_bullets(Game &game, bool &mute_flag);
-void	soloGameMod(Game &game, char *my_name, int &getch_ref, bool &mut_flag);
+
+void	player1Action(int &getch_ref, Game &game);
+void	delete_and_move_bullets(Game &game);
+void	soloGameMod(Game &game, char *my_name, int &getch_ref);
 void 	score_calculation(Game &game);
 void 	takeClientMove(int &client_getch_ref, int socket, bool &mut_flag);
 void	getch_ret(int &getch_ref, bool &mut_flag);
@@ -81,5 +86,6 @@ void	readFromServer(int &sock, bool &mut_flag);
 void	serverMod(Game &game, char *my_name, int &getch_ref, int &client_getch_ref, bool &mut_flag, int serverOrClient);
 void	clientMod(Game &game, char *my_name, int &getch_ref, int &client_getch_ref, bool &mut_flag, int serverOrClient);
 void 	score_calculation(Game &game);
+t_stars    *createBackgroud(Game &game, t_stars *stars);
 
 #endif //C_POOL_INCLUDES_H

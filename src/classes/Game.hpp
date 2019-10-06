@@ -36,6 +36,8 @@ public:
 	void	clsGameEntities();
 	void	printField();
 	char	*getOneLineField();
+    void setScore(unsigned int score);
+    unsigned int getScore() const;
 
 
 
@@ -47,21 +49,13 @@ private:
 
 	time_t time = 0;
 	unsigned score = 0;
-
-public:
-	void setScore(unsigned int score);
-
-private:
 	Player players[MAX_PLAYERS];
 	StandardUnit StandartUnits[STANDART_UNITS_NUMBER];
 	GameEntity *gameEntities[HEIGHT][WIDTH];
 	t_bullet *bullets;
-public:
-	unsigned int getScore() const;
-
-private:
-
 	char field[HEIGHT][WIDTH + 1];
+
+
 };
 
 

@@ -54,7 +54,7 @@ t_bullet	*delete_bullet(t_bullet *bullet,
 	return (tmp);
 }
 
-void	delete_and_move_bullets(Game &game, bool &mute_flag)
+void	delete_and_move_bullets(Game &game)
 {
 	t_bullet *bulletTmp;
 	t_bullet *bulletTmp1;

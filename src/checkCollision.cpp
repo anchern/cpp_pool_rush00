@@ -45,5 +45,4 @@ void	checkCollision(GameEntity *GE1, GameEntity *GE2, Game &game)
 		((Bullet *)GE1)->death();
 		((Bullet *)GE2)->death();
 	}
-
 }

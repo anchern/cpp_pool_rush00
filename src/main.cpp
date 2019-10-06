@@ -69,6 +69,7 @@ void sendData(int socket, Game &game, time_t sTime, time_t mTime)
 	delete [] outData;
 }
 
+
 void	printField(Game &game, time_t sTime, int socket)
 {
 	time_t time;
@@ -166,7 +167,7 @@ int		startMenu()
 		case 3:
 			clear();
 			refresh();
-			return (0);
+			return (3);
 		default:
 			break;
 	}
@@ -176,35 +177,37 @@ int		startMenu()
 int main()
 {
 	int getch_ref;
-	int client_getch_ref;
-	Game &game = Game::instance();
-	bool mut_flag = false;
+    int client_getch_ref;
+    Game &game = Game::instance();
+    bool mut_flag = false;
 
-	int serverOrClient = 0;
+    int serverOrClient = 0;
 
-	char my_name[64];
-
-
+    char my_name[64];
 
 
-	setlocale(LC_ALL, "");
-	initscr();
-	noecho();
-	keypad(stdscr, TRUE);
-	numberOfPlayers = 0;
 
-	serverOrClient = startMenu();
-	clear();
-	printw("ENTER YOUR NAME: ");
+
+    setlocale(LC_ALL, "");
+    initscr();
+    noecho();
+    keypad(stdscr, TRUE);
+    numberOfPlayers = 0;
+
+    serverOrClient = startMenu();
+    if (serverOrClient == 3)
+        return (0);
+    clear();
+    printw("ENTER YOUR NAME: ");
 	echo();
 	refresh();
 	scanw("%s\n", my_name);
 	noecho();
 	if (serverOrClient == 0)
-		soloGameMod(game, my_name, getch_ref, mut_flag);
-	else if (serverOrClient == 1)
-		serverMod(game, my_name, getch_ref, client_getch_ref, mut_flag, serverOrClient);
-	else if (serverOrClient == 2) // CLIENT MOD
-		clientMod(game, my_name, getch_ref, client_getch_ref, mut_flag, serverOrClient);
+		soloGameMod(game, my_name, getch_ref);
+//	else if (serverOrClient == 1)
+//		serverMod(game, my_name, getch_ref, client_getch_ref, mut_flag, serverOrClient);
+//	else if (serverOrClient == 2) // CLIENT MOD
+//		clientMod(game, my_name, getch_ref, client_getch_ref, mut_flag, serverOrClient);
 	return (0);
 }
