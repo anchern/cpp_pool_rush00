@@ -98,20 +98,6 @@ void	setBulletsOnField(Game &game)
 	}
 }
 
-//void	setEntitiesOnField(Game &game)
-//{
-//	for (int i = 0; i < game.getStandartUnits()->get_speed(); i++)
-//		setStandardUnitsOnField(game);
-//	if (game.getBullets() != NULL)
-//	{
-//		for (int i = 0; i < game.getBullets()->bullet->get_speed(); i++)
-//			setBulletsOnField(game);
-//	}
-//	for (int i = 0; i < game.getPlayers()->get_speed(); i++)
-//		setPlayersOnField(game);
-//}
-
-
 void	setEntitiesOnPrintField(Game &game)
 {
 	t_location tmp_loc;

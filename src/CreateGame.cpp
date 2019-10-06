@@ -1,5 +1,6 @@
 #include "classes/Game.hpp"
 #include <ncurses.h>
+
 void	initSingleGame(Game &game, std::string player_name_1)
 {
 	t_location location;

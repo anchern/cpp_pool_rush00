@@ -66,9 +66,20 @@ int 		get_new_connect_socket(int server_fd, struct sockaddr_in &address);
 void		print_game_over();
 void 		free_bullets(t_bullet *bullet);
 void	destroyStandartUnits(Game &game);
-
-
-
-void print_bull_coords(t_bullet *bullets);
+void	player2Action(std::function<int(std::string *menu_items, int size,
+										int &client_getch_ref, int socket)> &menu,int &client_getch_ref,
+					  Game &game, std::thread &thr1, bool &mut_flag, int socket);
+void	player1Action(int &getch_ref, Game &game, std::thread &thr1, bool &mut_flag);
+void	delete_and_move_bullets(Game &game, bool &mute_flag);
+void	soloGameMod(Game &game, char *my_name, int &getch_ref, bool &mut_flag);
+void 	score_calculation(Game &game);
+void 	takeClientMove(int &client_getch_ref, int socket, bool &mut_flag);
+void	getch_ret(int &getch_ref, bool &mut_flag);
+void	printField(Game &game, time_t sTime, int socket);
+void	standardUnitActions(int j, Game &game);
+void	readFromServer(int &sock, bool &mut_flag);
+void	serverMod(Game &game, char *my_name, int &getch_ref, int &client_getch_ref, bool &mut_flag, int serverOrClient);
+void	clientMod(Game &game, char *my_name, int &getch_ref, int &client_getch_ref, bool &mut_flag, int serverOrClient);
+void 	score_calculation(Game &game);
 
 #endif //C_POOL_INCLUDES_H

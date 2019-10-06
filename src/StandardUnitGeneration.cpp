@@ -8,8 +8,6 @@ void	standardUnitGeneration(Game &game)
 	int			rand;
 	t_location	location;
 
-//	std::ctime(&time1);
-//	std::srand(unsigned(time1));
 	rand = std::rand() % (WIDTH - WIDTH_STANDARD_UNIT - 1);
 	location.x = rand;
 	location.y = 0;
